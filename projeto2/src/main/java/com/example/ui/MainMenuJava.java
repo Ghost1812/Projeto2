@@ -123,7 +123,16 @@ public class MainMenuJava extends JFrame {
             panel.add(createStyledButton("Listar Encomendas", e -> abrirListarEncomendas()));
             panel.add(Box.createRigidArea(new Dimension(0, 15)));
             panel.add(createStyledButton("Listar Clientes", e -> abrirListarClientes()));
+        } else if ("operador".equalsIgnoreCase(funcionario.getCargo())) {
+            panel.add(createStyledButton("Triagem de Encomendas", e -> abrirTriagemEncomendas()));
+            panel.add(Box.createRigidArea(new Dimension(0, 15)));
+        } else if ("estafeta".equalsIgnoreCase(funcionario.getCargo())) {
+            panel.add(createStyledButton("Alterar Estado de Entrega", e -> abrirEntregaEncomendas()));
+            panel.add(Box.createRigidArea(new Dimension(0, 15)));
         }
+
+
+
 
         panel.add(Box.createRigidArea(new Dimension(0, 30)));
 
@@ -202,4 +211,14 @@ public class MainMenuJava extends JFrame {
         FuncionarioService funcionarioService = context.getBean(FuncionarioService.class);
         new LoginFrame(funcionarioService);
     }
+
+    private void abrirTriagemEncomendas() {
+        new TriagemEncomendasFrame(); // vamos criar esta classe
+    }
+
+    private void abrirEntregaEncomendas() {
+        new EntregaEncomendasFrame();
+    }
+
+
 }

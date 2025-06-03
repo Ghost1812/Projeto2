@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class ListarEncomendasFrame extends JFrame {
-
     private JTable tabela;
     private final Color PACKBEE_COLOR = new Color(230, 180, 60);
     private final Color BACKGROUND_COLOR = Color.WHITE;
@@ -21,17 +20,15 @@ public class ListarEncomendasFrame extends JFrame {
 
     public ListarEncomendasFrame() {
         setTitle("Lista de Encomendas");
-        setSize(900, 600);
+        setSize(1000, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(BACKGROUND_COLOR);
         setLayout(new BorderLayout(10, 10));
 
-        // Painel do topo com logo
         JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
-        // Painel central
         JPanel contentPanel = new JPanel(new BorderLayout(10, 10));
         contentPanel.setBackground(BACKGROUND_COLOR);
         contentPanel.setBorder(new EmptyBorder(0, 20, 10, 20));
@@ -46,17 +43,14 @@ public class ListarEncomendasFrame extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tabela);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
 
-        // Botões
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(BACKGROUND_COLOR);
 
         JButton fecharButton = createStyledButton("Fechar");
         fecharButton.addActionListener(e -> dispose());
-
         buttonPanel.add(fecharButton);
 
         contentPanel.add(buttonPanel, BorderLayout.SOUTH);
-
         add(contentPanel, BorderLayout.CENTER);
 
         setVisible(true);
@@ -99,7 +93,7 @@ public class ListarEncomendasFrame extends JFrame {
     }
 
     private void carregarTabela() {
-        String[] colunas = {"ID", "Peso (kg)", "ID Cliente", "ID Rececionista", "Estado Integridade", "Estado Entrega"};
+        String[] colunas = {"ID", "Peso (kg)", "ID Cliente", "ID Rececionista", "ID Operador", "Estado Integridade", "Estado Entrega"};
 
         DefaultTableModel model = new DefaultTableModel(colunas, 0) {
             @Override
@@ -109,7 +103,7 @@ public class ListarEncomendasFrame extends JFrame {
         };
 
         try (Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5433/Projeto2", "postgres", "trepeteiro00");
-             PreparedStatement stmt = conn.prepareStatement("SELECT id_encomenda, peso, id_cliente, id_rececionista, estado_integridade, estado_entrega FROM encomenda");
+             PreparedStatement stmt = conn.prepareStatement("SELECT id_encomenda, peso, id_cliente, id_rececionista, id_operador, estado_integridade, estado_entrega FROM encomenda");
              ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
@@ -118,6 +112,7 @@ public class ListarEncomendasFrame extends JFrame {
                         rs.getDouble("peso"),
                         rs.getInt("id_cliente"),
                         rs.getInt("id_rececionista"),
+                        rs.getInt("id_operador"),
                         rs.getString("estado_integridade") != null ? rs.getString("estado_integridade") : "N/A",
                         rs.getString("estado_entrega") != null ? rs.getString("estado_entrega") : "N/A"
                 });
@@ -129,8 +124,6 @@ public class ListarEncomendasFrame extends JFrame {
         }
 
         tabela = new JTable(model);
-
-        // Estilizar cabeçalho
         JTableHeader header = tabela.getTableHeader();
         header.setBackground(HEADER_BG_COLOR);
         header.setFont(new Font("Arial", Font.BOLD, 14));
@@ -146,17 +139,8 @@ public class ListarEncomendasFrame extends JFrame {
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
-        tabela.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-        tabela.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
-        tabela.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
-        tabela.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-
-        tabela.getColumnModel().getColumn(0).setPreferredWidth(50);  // ID
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(100); // Peso
-        tabela.getColumnModel().getColumn(2).setPreferredWidth(100); // ID Cliente
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(120); // ID Rececionista
-        tabela.getColumnModel().getColumn(4).setPreferredWidth(180); // Estado Integridade
-        tabela.getColumnModel().getColumn(5).setPreferredWidth(150); // Estado Entrega
+        for (int i = 0; i < tabela.getColumnCount(); i++) {
+            tabela.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
     }
 }

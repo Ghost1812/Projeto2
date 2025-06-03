@@ -21,9 +21,10 @@ public class Encomenda {
     @JoinColumn(name = "id_rececionista", nullable = false)
     private Rececionista idRececionista;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente idCliente;
+
 
     @Column(name = "estado_integridade", nullable = false)
     private String estadoIntegridade;
