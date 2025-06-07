@@ -137,7 +137,7 @@ public class MainMenuJava extends JFrame {
         } else if (cargo.equals("estafeta")) {
             panel.add(createStyledButton("Alterar Estado de Entrega", e -> abrirEntregaEncomendas()));
             panel.add(Box.createRigidArea(new Dimension(0, 15)));
-        } else if (cargo.equals("agente")) {
+        } else if (cargo.equals("agente_feedback")) {
             panel.add(createStyledButton("Visualizar Questionários", e -> visualizarQuestionarios()));
             panel.add(Box.createRigidArea(new Dimension(0, 15)));
             panel.add(createStyledButton("Enviar Questionários", e -> enviarQuestionarios()));
