@@ -11,7 +11,7 @@ import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.List;
 
-public class ListarClientesFrame extends JFrame {
+public class ListarClientesFrame extends JanelaBase {
 
     private final ClienteRepository clienteRepository;
     private JTable tabela;

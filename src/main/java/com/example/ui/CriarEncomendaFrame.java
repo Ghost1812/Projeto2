@@ -14,14 +14,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.List;
 
-public class CriarEncomendaFrame extends JFrame {
+public class CriarEncomendaFrame extends JanelaBase {
 
     private final ClienteRepository clienteRepository;
     private final Funcionario funcionario;
     private JComboBox<Cliente> comboBoxClientes;
     private JTextField pesoField;
 
-    // Cores do sistema PackBee
     private final Color PACKBEE_COLOR = new Color(230, 180, 60);
     private final Color HOVER_COLOR = new Color(240, 200, 80);
     private final Color BACKGROUND_COLOR = Color.WHITE;
@@ -34,21 +33,18 @@ public class CriarEncomendaFrame extends JFrame {
         this.funcionario = funcionario;
 
         setTitle("Criar Nova Encomenda");
-        setSize(450, 400);
+        setSize(450, 350);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         getContentPane().setBackground(BACKGROUND_COLOR);
         setLayout(new BorderLayout());
 
-        // Painel de cabeçalho com logo
         JPanel headerPanel = createHeaderPanel();
         add(headerPanel, BorderLayout.NORTH);
 
-        // Painel principal com formulário
         JPanel formPanel = createFormPanel();
         add(formPanel, BorderLayout.CENTER);
 
-        // Painel de botões
         JPanel buttonPanel = createButtonPanel();
         add(buttonPanel, BorderLayout.SOUTH);
 
@@ -60,7 +56,6 @@ public class CriarEncomendaFrame extends JFrame {
         panel.setBackground(BACKGROUND_COLOR);
         panel.setBorder(new EmptyBorder(15, 20, 5, 20));
 
-        // Tenta carregar o ícone do logo
         ImageIcon logoIcon = null;
         try {
             var logoURL = getClass().getClassLoader().getResource("images/img.png");
@@ -93,7 +88,6 @@ public class CriarEncomendaFrame extends JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(8, 5, 8, 5);
 
-        // Label Cliente
         JLabel clienteLabel = new JLabel("Cliente");
         clienteLabel.setFont(new Font("Arial", Font.BOLD, 14));
         clienteLabel.setForeground(TEXT_COLOR);
@@ -102,46 +96,27 @@ public class CriarEncomendaFrame extends JFrame {
         gbc.gridwidth = 2;
         panel.add(clienteLabel, gbc);
 
-        // ComboBox Cliente
         comboBoxClientes = new JComboBox<>();
         comboBoxClientes.setFont(new Font("Arial", Font.PLAIN, 14));
         comboBoxClientes.setBackground(FIELD_BG_COLOR);
         comboBoxClientes.setBorder(BorderFactory.createLineBorder(BORDER_COLOR));
         comboBoxClientes.setPreferredSize(new Dimension(300, 35));
         carregarClientes();
-        gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.gridwidth = 2;
         panel.add(comboBoxClientes, gbc);
 
-        // Botão Criar Novo Cliente
-        JButton criarClienteButton = createStyledButton("Criar Novo Cliente");
-        criarClienteButton.setPreferredSize(new Dimension(150, 35));
-        criarClienteButton.addActionListener(e -> abrirCriarCliente());
-        gbc.gridx = 0;
-        gbc.gridy = 2;
-        gbc.gridwidth = 2;
-        gbc.anchor = GridBagConstraints.CENTER;
-        panel.add(criarClienteButton, gbc);
-
-        // Label Peso
         JLabel pesoLabel = new JLabel("Peso (kg)");
         pesoLabel.setFont(new Font("Arial", Font.BOLD, 14));
         pesoLabel.setForeground(TEXT_COLOR);
-        gbc.gridx = 0;
-        gbc.gridy = 3;
-        gbc.gridwidth = 2;
+        gbc.gridy = 2;
         panel.add(pesoLabel, gbc);
 
-        // Campo Peso
         pesoField = new JTextField();
         pesoField.setFont(new Font("Arial", Font.PLAIN, 14));
         pesoField.setPreferredSize(new Dimension(300, 35));
         pesoField.setBackground(FIELD_BG_COLOR);
         pesoField.setBorder(BorderFactory.createLineBorder(BORDER_COLOR));
-        gbc.gridx = 0;
-        gbc.gridy = 4;
-        gbc.gridwidth = 2;
+        gbc.gridy = 3;
         panel.add(pesoField, gbc);
 
         return panel;
@@ -183,7 +158,6 @@ public class CriarEncomendaFrame extends JFrame {
         btn.setBorderPainted(false);
         btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
-        // Efeito hover
         btn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -207,13 +181,9 @@ public class CriarEncomendaFrame extends JFrame {
         }
     }
 
-    private void abrirCriarCliente() {
-        new CriarClienteFrame(this, clienteRepository);
-    }
-
     public void atualizarClientesDepoisDeCriar() {
         carregarClientes();
-        comboBoxClientes.setSelectedIndex(comboBoxClientes.getItemCount() - 1); // Seleciona o último adicionado
+        comboBoxClientes.setSelectedIndex(comboBoxClientes.getItemCount() - 1);
     }
 
     private void cadastrarEncomenda() {
@@ -256,20 +226,10 @@ public class CriarEncomendaFrame extends JFrame {
     }
 
     private void mostrarMensagemSucesso(String mensagem) {
-        JOptionPane.showMessageDialog(
-                this,
-                mensagem,
-                "Sucesso",
-                JOptionPane.INFORMATION_MESSAGE
-        );
+        JOptionPane.showMessageDialog(this, mensagem, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void mostrarMensagemErro(String mensagem) {
-        JOptionPane.showMessageDialog(
-                this,
-                mensagem,
-                "Erro",
-                JOptionPane.ERROR_MESSAGE
-        );
+        JOptionPane.showMessageDialog(this, mensagem, "Erro", JOptionPane.ERROR_MESSAGE);
     }
 }

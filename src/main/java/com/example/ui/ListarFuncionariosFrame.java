@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class ListarFuncionariosFrame extends JFrame {
+public class ListarFuncionariosFrame extends JanelaBase {
 
     private JTable tabela;
     private final Color PACKBEE_COLOR = new Color(230, 180, 60);

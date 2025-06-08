@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-public class CriarUtilizadorFrame extends JFrame {
+public class CriarUtilizadorFrame extends JanelaBase {
 
     private final Color PACKBEE_COLOR = new Color(230, 180, 60);
     private final Color BACKGROUND_COLOR = Color.WHITE;

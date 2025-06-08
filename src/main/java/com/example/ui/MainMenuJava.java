@@ -113,10 +113,6 @@ public class MainMenuJava extends JFrame {
         String cargo = normalizar(funcionario.getCargo());
         System.out.println("Cargo normalizado: '" + cargo + "'");
 
-        System.out.println(">>> CARGO RAW: " + funcionario.getCargo());
-        System.out.println(">>> CARGO NORMALIZADO: " + cargo);
-
-
         if (cargo.equals("admin")) {
             panel.add(createStyledButton("Criar Novo Utilizador", e -> abrirCriarNovoUtilizador()));
             panel.add(Box.createRigidArea(new Dimension(0, 15)));
@@ -137,14 +133,10 @@ public class MainMenuJava extends JFrame {
         } else if (cargo.equals("estafeta")) {
             panel.add(createStyledButton("Alterar Estado de Entrega", e -> abrirEntregaEncomendas()));
             panel.add(Box.createRigidArea(new Dimension(0, 15)));
-        } else if (cargo.equals("agente_feedback")) {
-            panel.add(createStyledButton("Visualizar Questionários", e -> visualizarQuestionarios()));
-            panel.add(Box.createRigidArea(new Dimension(0, 15)));
-            panel.add(createStyledButton("Enviar Questionários", e -> enviarQuestionarios()));
+        } else if (cargo.equals("agentefeedback")) {
+            panel.add(createStyledButton("Ver Respostas de Feedback", e -> abrirFeedback()));
             panel.add(Box.createRigidArea(new Dimension(0, 15)));
         }
-
-
 
         panel.add(Box.createRigidArea(new Dimension(0, 30)));
 
@@ -238,12 +230,7 @@ public class MainMenuJava extends JFrame {
         new EntregaEncomendasFrame();
     }
 
-    private void visualizarQuestionarios() {
-        new VisualizarQuestionariosFrame();
+    private void abrirFeedback() {
+        new VisualizarFeedbackFrame(); // Certifique-se de implementar esta classe
     }
-
-    private void enviarQuestionarios() {
-        new EnviarQuestionariosFrame();
-    }
-
 }

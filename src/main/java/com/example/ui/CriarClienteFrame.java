@@ -7,7 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-public class CriarClienteFrame extends JFrame {
+public class CriarClienteFrame extends JanelaBase {
 
     private final CriarEncomendaFrame parentFrame;
     private final ClienteRepository clienteRepository;

@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
-public class TriagemEncomendasFrame extends JFrame {
+public class TriagemEncomendasFrame extends JanelaBase {
 
     private final EncomendaRepository encomendaRepository;
     private JTable tabela;

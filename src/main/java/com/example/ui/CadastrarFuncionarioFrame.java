@@ -5,7 +5,7 @@ import com.example.proj2.services.FuncionarioService;
 import javax.swing.*;
 import java.awt.*;
 
-public class CadastrarFuncionarioFrame extends JFrame {
+public class CadastrarFuncionarioFrame extends JanelaBase {
 
     public CadastrarFuncionarioFrame(FuncionarioService funcionarioService) {
         setTitle("Cadastrar Novo Funcionário");

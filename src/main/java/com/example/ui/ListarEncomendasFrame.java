@@ -11,7 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class ListarEncomendasFrame extends JFrame {
+public class ListarEncomendasFrame extends JanelaBase {
     private JTable tabela;
     private final Color PACKBEE_COLOR = new Color(230, 180, 60);
     private final Color BACKGROUND_COLOR = Color.WHITE;
