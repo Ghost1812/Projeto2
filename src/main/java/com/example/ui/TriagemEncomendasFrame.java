@@ -2,14 +2,13 @@ package com.example.ui;
 
 import com.example.proj2.models.Encomenda;
 import com.example.proj2.repositories.EncomendaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 
+// Classe da interface para triagem de encomendas (usada por operadores)
 public class TriagemEncomendasFrame extends JanelaBase {
 
     private final EncomendaRepository encomendaRepository;
@@ -17,6 +16,7 @@ public class TriagemEncomendasFrame extends JanelaBase {
     private final Color PACKBEE_COLOR = new Color(230, 180, 60);
     private final Color BACKGROUND_COLOR = Color.WHITE;
 
+    // Construtor da interface
     public TriagemEncomendasFrame() {
         this.encomendaRepository = com.example.SpringContext.getContext().getBean(EncomendaRepository.class);
 
@@ -27,6 +27,7 @@ public class TriagemEncomendasFrame extends JanelaBase {
         getContentPane().setBackground(BACKGROUND_COLOR);
         setLayout(new BorderLayout());
 
+        // Header (logo + título)
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         headerPanel.setBackground(BACKGROUND_COLOR);
         headerPanel.setBorder(new EmptyBorder(20, 20, 0, 0));
@@ -47,6 +48,7 @@ public class TriagemEncomendasFrame extends JanelaBase {
         headerPanel.add(titulo);
         add(headerPanel, BorderLayout.NORTH);
 
+        // Centro com a tabela
         JPanel centerPanel = new JPanel(new BorderLayout());
         centerPanel.setBackground(BACKGROUND_COLOR);
         centerPanel.setBorder(new EmptyBorder(10, 20, 10, 20));
@@ -56,13 +58,18 @@ public class TriagemEncomendasFrame extends JanelaBase {
         subTitulo.setBorder(new EmptyBorder(0, 0, 10, 0));
         centerPanel.add(subTitulo, BorderLayout.NORTH);
 
-        String[] colunas = {"ID", "Peso (kg)", "ID Cliente", "ID Rececionista", "ID Operador", "Estado Integridade", "Estado Entrega"};
+        String[] colunas = {
+                "ID", "Peso (kg)", "ID Cliente", "ID Rececionista",
+                "ID Operador", "Estado Integridade", "Estado Entrega"
+        };
         tabela = new JTable(new DefaultTableModel(colunas, 0));
         tabela.setRowHeight(28);
+
         JScrollPane scrollPane = new JScrollPane(tabela);
         centerPanel.add(scrollPane, BorderLayout.CENTER);
         add(centerPanel, BorderLayout.CENTER);
 
+        // Rodapé com botões
         JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         footer.setBackground(BACKGROUND_COLOR);
         footer.setBorder(new EmptyBorder(10, 20, 20, 20));
@@ -80,10 +87,12 @@ public class TriagemEncomendasFrame extends JanelaBase {
         footer.add(fecharBtn);
         add(footer, BorderLayout.SOUTH);
 
+        // Carrega os dados na tabela ao abrir
         carregarEncomendas();
         setVisible(true);
     }
 
+    // Estiliza botões para manter o design consistente
     private void estilizarBotao(JButton botao) {
         botao.setFont(new Font("Arial", Font.PLAIN, 14));
         botao.setBackground(PACKBEE_COLOR);
@@ -93,10 +102,11 @@ public class TriagemEncomendasFrame extends JanelaBase {
         botao.setPreferredSize(new Dimension(180, 35));
     }
 
+    // Carrega todas as encomendas na tabela
     private void carregarEncomendas() {
         List<Encomenda> encomendas = encomendaRepository.findAll();
         DefaultTableModel model = (DefaultTableModel) tabela.getModel();
-        model.setRowCount(0);
+        model.setRowCount(0); // limpa a tabela
 
         for (Encomenda e : encomendas) {
             model.addRow(new Object[]{
@@ -111,6 +121,7 @@ public class TriagemEncomendasFrame extends JanelaBase {
         }
     }
 
+    // Edita o estado de integridade da encomenda selecionada
     private void editarIntegridadeSelecionada() {
         int selectedRow = tabela.getSelectedRow();
         if (selectedRow == -1) {

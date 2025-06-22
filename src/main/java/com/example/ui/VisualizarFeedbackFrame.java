@@ -12,29 +12,33 @@ import java.util.List;
 
 public class VisualizarFeedbackFrame extends JanelaBase {
 
+    // Repositório para acessar os dados de feedback
     private final FeedbackRepository feedbackRepository;
 
     public VisualizarFeedbackFrame() {
+        // Obtém o bean do repositório a partir do contexto Spring
         this.feedbackRepository = SpringContext.getContext().getBean(FeedbackRepository.class);
 
+        // Configurações básicas da janela
         setTitle("Respostas de Feedback dos Clientes");
         setSize(1000, 600);
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // centraliza a janela
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         getContentPane().setBackground(Color.WHITE);
 
-        initComponents();
+        initComponents(); // inicializa os componentes da UI
 
         setVisible(true);
     }
 
     private void initComponents() {
+        // Painel principal com margem e cor de fundo
         JPanel contentPane = new JPanel(new BorderLayout(15, 15));
         contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
         contentPane.setBackground(Color.WHITE);
         setContentPane(contentPane);
 
-        // Cabeçalho com logo e título
+        // Cabeçalho com logotipo e nome da aplicação
         JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         headerPanel.setBackground(Color.WHITE);
 
@@ -54,18 +58,18 @@ public class VisualizarFeedbackFrame extends JanelaBase {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
         titleLabel.setForeground(new Color(70, 50, 20));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+
         headerPanel.add(logoLabel);
         headerPanel.add(titleLabel);
-
         contentPane.add(headerPanel, BorderLayout.NORTH);
 
-        // Subtítulo
+        // Subtítulo da tabela
         JLabel subtitle = new JLabel("Respostas de Feedback dos Clientes", JLabel.CENTER);
         subtitle.setFont(new Font("Arial", Font.BOLD, 18));
         subtitle.setForeground(new Color(51, 51, 51));
         contentPane.add(subtitle, BorderLayout.BEFORE_FIRST_LINE);
 
-        // Tabela
+        // Tabela que irá listar os feedbacks
         JTable table = new JTable();
         DefaultTableModel tableModel = new DefaultTableModel(
                 new Object[]{"ID", "ID do Cliente", "Reclamação", "Nota de Serviço", "Opiniões", "Questionário"}, 0
@@ -78,21 +82,24 @@ public class VisualizarFeedbackFrame extends JanelaBase {
         JScrollPane scrollPane = new JScrollPane(table);
         contentPane.add(scrollPane, BorderLayout.CENTER);
 
-        // Rodapé com botão
+        // Rodapé com botão de fechar
         JPanel footerPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         footerPanel.setBackground(Color.WHITE);
+
         JButton fecharBtn = new JButton("Fechar");
         fecharBtn.setPreferredSize(new Dimension(100, 30));
         fecharBtn.setBackground(new Color(230, 180, 60));
         fecharBtn.setForeground(Color.BLACK);
         fecharBtn.setFocusPainted(false);
-        fecharBtn.addActionListener(e -> dispose());
+        fecharBtn.addActionListener(e -> dispose()); // Fecha a janela ao clicar
         footerPanel.add(fecharBtn);
+
         contentPane.add(footerPanel, BorderLayout.SOUTH);
 
-        preencherTabela(tableModel);
+        preencherTabela(tableModel); // Carrega os dados para a tabela
     }
 
+    // Método responsável por buscar os feedbacks no banco de dados e preencher a tabela
     private void preencherTabela(DefaultTableModel model) {
         List<Feedback> feedbacks = feedbackRepository.findAll();
 
