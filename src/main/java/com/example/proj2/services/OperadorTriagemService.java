@@ -6,24 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class OperadorTriagemService {
 
-    private final OperadorTriagemRepository operadorTriagemRepository;
-
     @Autowired
-    public OperadorTriagemService(OperadorTriagemRepository operadorTriagemRepository) {
-        this.operadorTriagemRepository = operadorTriagemRepository;
-    }
+    private OperadorTriagemRepository operadorTriagemRepository;
 
     public List<OperadorTriagem> findAll() {
         return operadorTriagemRepository.findAll();
     }
 
-    public Optional<OperadorTriagem> findById(Integer id) {
-        return operadorTriagemRepository.findById(id);
+    public OperadorTriagem findById(Integer id) {
+        return operadorTriagemRepository.findById(id).orElse(null);
     }
 
     public OperadorTriagem save(OperadorTriagem operadorTriagem) {

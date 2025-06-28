@@ -39,4 +39,26 @@ public class EncomendaService {
     public void deleteById(Integer id) {
         encomendaRepository.deleteById(id);
     }
+
+    public List<Encomenda> searchByNumeroRastreio(String numeroRastreio) {
+        return encomendaRepository.findByNumeroRastreioContainingIgnoreCase(numeroRastreio);
+    }
+
+    public List<Encomenda> findByEstadoIntegridade(String estadoIntegridade) {
+        return encomendaRepository.findByEstadoIntegridade(estadoIntegridade);
+    }
+
+    public List<Encomenda> findByEstadoEntrega(String estadoEntrega) {
+        return encomendaRepository.findByEstadoEntrega(estadoEntrega);
+    }
+
+    // Método de conveniência para compatibilidade com controllers existentes
+    public List<Encomenda> findByEstado(String estado) {
+        // Tenta primeiro por estado de entrega, depois por estado de integridade
+        List<Encomenda> result = encomendaRepository.findByEstadoEntrega(estado);
+        if (result.isEmpty()) {
+            result = encomendaRepository.findByEstadoIntegridade(estado);
+        }
+        return result;
+    }
 }

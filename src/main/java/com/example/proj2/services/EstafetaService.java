@@ -6,24 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EstafetaService {
 
-    private final EstafetaRepository estafetaRepository;
-
     @Autowired
-    public EstafetaService(EstafetaRepository estafetaRepository) {
-        this.estafetaRepository = estafetaRepository;
-    }
+    private EstafetaRepository estafetaRepository;
 
     public List<Estafeta> findAll() {
         return estafetaRepository.findAll();
     }
 
-    public Optional<Estafeta> findById(Integer id) {
-        return estafetaRepository.findById(id);
+    public Estafeta findById(Integer id) {
+        return estafetaRepository.findById(id).orElse(null);
     }
 
     public Estafeta save(Estafeta estafeta) {

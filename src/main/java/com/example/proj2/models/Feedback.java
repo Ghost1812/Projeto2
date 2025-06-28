@@ -6,20 +6,15 @@ import jakarta.persistence.*;
 @Table(name = "\"feedback\"")
 public class Feedback {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_feedback", nullable = false)
     private Integer id;
 
-    @Column(name = "reclamacao", nullable = false, length = Integer.MAX_VALUE)
-    private String reclamacao;
+    @Column(name = "comentario", nullable = false, length = 1000)
+    private String comentario;
 
-    @Column(name = "notadeservico", nullable = false, length = Integer.MAX_VALUE)
-    private String notadeservico;
-
-    @Column(name = "opinioes", nullable = false, length = Integer.MAX_VALUE)
-    private String opinioes;
-
-    @Column(name = "questionario", nullable = false, length = Integer.MAX_VALUE)
-    private String questionario;
+    @Column(name = "status", nullable = false, length = 20)
+    private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_cliente", nullable = false)
@@ -33,36 +28,20 @@ public class Feedback {
         this.id = id;
     }
 
-    public String getReclamacao() {
-        return reclamacao;
+    public String getComentario() {
+        return comentario;
     }
 
-    public void setReclamacao(String reclamacao) {
-        this.reclamacao = reclamacao;
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
     }
 
-    public String getNotadeservico() {
-        return notadeservico;
+    public String getStatus() {
+        return status;
     }
 
-    public void setNotadeservico(String notadeservico) {
-        this.notadeservico = notadeservico;
-    }
-
-    public String getOpinioes() {
-        return opinioes;
-    }
-
-    public void setOpinioes(String opinioes) {
-        this.opinioes = opinioes;
-    }
-
-    public String getQuestionario() {
-        return questionario;
-    }
-
-    public void setQuestionario(String questionario) {
-        this.questionario = questionario;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Cliente getIdCliente() {

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj2.controllers.ClienteController" spacing="20">
+   <children>
+      <!-- Header -->
+      <HBox style="-fx-background-color: #e6b43c;" alignment="CENTER_LEFT">
+         <children>
+            <Label text="Gestão de Clientes" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;">
+               <HBox.margin>
+                  <Insets left="20.0" top="10.0" bottom="10.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+      
+      <!-- Form Section -->
+      <VBox spacing="15" style="-fx-background-color: #f9f9f9; -fx-padding: 20;">
+         <children>
+            <Label text="Dados do Cliente" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            
+            <!-- Form Grid -->
+            <GridPane hgap="15" vgap="10">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="250.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="250.0" />
+               </columnConstraints>
+               
+               <children>
+                  <!-- Nome -->
+                  <Label text="Nome *" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                  <TextField fx:id="nomeField" promptText="Nome completo" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  
+                  <!-- Email -->
+                  <Label text="Email *" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+                  <TextField fx:id="emailField" promptText="email@exemplo.com" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+                  
+                  <!-- Telefone -->
+                  <Label text="Telefone *" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                  <TextField fx:id="telefoneField" promptText="+351 123 456 789" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  
+                  <!-- Código Postal -->
+                  <Label text="Código Postal *" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="codPostalField" promptText="1000-001" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  
+                  <!-- Morada -->
+                  <Label text="Morada" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <TextField fx:id="moradaField" promptText="Rua das Flores, 123" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  
+                  <!-- Cidade -->
+                  <Label text="Cidade" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                  <TextField fx:id="cidadeField" promptText="Lisboa" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                  
+                  <!-- País -->
+                  <Label text="País" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                  <TextField fx:id="paisField" promptText="Portugal" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+            
+            <!-- Buttons -->
+            <HBox spacing="10" alignment="CENTER">
+               <children>
+                  <Button fx:id="createButton" text="Criar" onAction="#handleCreate" styleClass="primary-button" />
+                  <Button fx:id="updateButton" text="Atualizar" onAction="#handleUpdate" styleClass="secondary-button" />
+                  <Button fx:id="deleteButton" text="Eliminar" onAction="#handleDelete" styleClass="danger-button" />
+                  <Button fx:id="clearButton" text="Limpar" onAction="#handleClear" styleClass="neutral-button" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      
+      <!-- Search Section -->
+      <HBox spacing="10" alignment="CENTER_LEFT">
+         <children>
+            <Label text="Pesquisar:" />
+            <TextField fx:id="searchField" promptText="Digite o nome do cliente..." prefWidth="300" />
+         </children>
+      </HBox>
+      
+      <!-- Table Section -->
+      <VBox VBox.vgrow="ALWAYS">
+         <children>
+            <Label text="Lista de Clientes" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            
+            <TableView fx:id="clientesTable" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="nomeColumn" text="Nome" prefWidth="200" />
+                  <TableColumn fx:id="emailColumn" text="Email" prefWidth="250" />
+                  <TableColumn fx:id="telefoneColumn" text="Telefone" prefWidth="150" />
+                  <TableColumn fx:id="moradaColumn" text="Morada" prefWidth="300" />
+               </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+   
+   <stylesheets>
+      <String fx:value="/css/cliente.css" />
+   </stylesheets>
+</VBox> 

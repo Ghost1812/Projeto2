@@ -6,24 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class VeiculoService {
 
-    private final VeiculoRepository veiculoRepository;
-
     @Autowired
-    public VeiculoService(VeiculoRepository veiculoRepository) {
-        this.veiculoRepository = veiculoRepository;
-    }
+    private VeiculoRepository veiculoRepository;
 
     public List<Veiculo> findAll() {
         return veiculoRepository.findAll();
     }
 
-    public Optional<Veiculo> findById(Integer id) {
-        return veiculoRepository.findById(id);
+    public Veiculo findById(Integer id) {
+        return veiculoRepository.findById(id).orElse(null);
     }
 
     public Veiculo save(Veiculo veiculo) {

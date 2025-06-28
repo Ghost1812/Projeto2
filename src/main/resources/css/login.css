@@ -1,0 +1,41 @@
+.root {
+    -fx-background-color: white;
+    -fx-font-family: "SansSerif";
+}
+
+.login-field {
+    -fx-pref-height: 40px;
+    -fx-font-size: 14px;
+    -fx-border-color: #dcdcdc;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-padding: 8px 10px;
+}
+
+.login-field:focused {
+    -fx-border-color: #e6b43c;
+    -fx-border-width: 2px;
+}
+
+.login-button {
+    -fx-background-color: #e6b43c;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-pref-height: 40px;
+    -fx-border-radius: 4px;
+    -fx-background-radius: 4px;
+    -fx-cursor: hand;
+}
+
+.login-button:hover {
+    -fx-background-color: #d4a53a;
+}
+
+.login-button:pressed {
+    -fx-background-color: #c29535;
+}
+
+.label {
+    -fx-text-fill: #333333;
+} 

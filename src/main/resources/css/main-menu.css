@@ -1,0 +1,37 @@
+.root {
+    -fx-font-family: "SansSerif";
+}
+
+.menu-button {
+    -fx-background-color: white;
+    -fx-text-fill: #333333;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-pref-width: 200px;
+    -fx-pref-height: 80px;
+    -fx-border-color: #e6b43c;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);
+}
+
+.menu-button:hover {
+    -fx-background-color: #e6b43c;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 3);
+}
+
+.menu-button:pressed {
+    -fx-background-color: #d4a53a;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
+}
+
+.label {
+    -fx-text-fill: #333333;
+}
+
+.button {
+    -fx-cursor: hand;
+} 

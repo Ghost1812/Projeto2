@@ -10,6 +10,9 @@ public class Encomenda {
     @Column(name = "id_encomenda", nullable = false)
     private Integer id;
 
+    @Column(name = "numero_rastreio", nullable = false, unique = true, length = 50)
+    private String numeroRastreio;
+
     @Column(name = "peso", nullable = false)
     private Double peso;
 
@@ -25,7 +28,6 @@ public class Encomenda {
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente idCliente;
 
-
     @Column(name = "estado_integridade", nullable = false)
     private String estadoIntegridade;
 
@@ -35,6 +37,9 @@ public class Encomenda {
     // Getters e Setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
+
+    public String getNumeroRastreio() { return numeroRastreio; }
+    public void setNumeroRastreio(String numeroRastreio) { this.numeroRastreio = numeroRastreio; }
 
     public Double getPeso() { return peso; }
     public void setPeso(Double peso) { this.peso = peso; }

@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "cliente") // <-- CORRIGIDO aqui!!
+@Table(name = "cliente")
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,20 +18,20 @@ public class Cliente {
     @Column(name = "nome", nullable = false, length = 50)
     private String nome;
 
-    @Column(name = "contacto", length = 50)
-    private String contacto;
-
-    @Column(name = "rua", length = 100)
-    private String rua;
-
-    @Column(name = "numero_porta")
-    private Integer numeroPorta;
-
-    @Column(name = "codpostal", length = 10)
-    private String codpostal;
+    @Column(name = "telefone", length = 20)
+    private String telefone;
 
     @Column(name = "email", length = 50)
     private String email;
+
+    @Column(name = "morada", length = 100)
+    private String morada;
+
+    @Column(name = "cidade", length = 50)
+    private String cidade;
+
+    @Column(name = "pais", length = 50)
+    private String pais;
 
     // Getters e Setters
 
@@ -51,36 +51,12 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getContacto() {
-        return contacto;
+    public String getTelefone() {
+        return telefone;
     }
 
-    public void setContacto(String contacto) {
-        this.contacto = contacto;
-    }
-
-    public String getRua() {
-        return rua;
-    }
-
-    public void setRua(String rua) {
-        this.rua = rua;
-    }
-
-    public Integer getNumeroPorta() {
-        return numeroPorta;
-    }
-
-    public void setNumeroPorta(Integer numeroPorta) {
-        this.numeroPorta = numeroPorta;
-    }
-
-    public String getCodpostal() {
-        return codpostal;
-    }
-
-    public void setCodpostal(String codpostal) {
-        this.codpostal = codpostal;
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
     }
 
     public String getEmail() {
@@ -89,6 +65,30 @@ public class Cliente {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getMorada() {
+        return morada;
+    }
+
+    public void setMorada(String morada) {
+        this.morada = morada;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     @Override
