@@ -19,20 +19,21 @@ public class FeedbackController {
 
     @FXML private TableView<Feedback> feedbackTable;
     @FXML private TableColumn<Feedback, String> clienteColumn;
-    @FXML private TableColumn<Feedback, String> comentarioColumn;
-    @FXML private TableColumn<Feedback, String> statusColumn;
-    
+    @FXML private TableColumn<Feedback, String> reclamacaoColumn;
+    @FXML private TableColumn<Feedback, String> notaServicoColumn;
+    @FXML private TableColumn<Feedback, String> opinioesColumn;
+    @FXML private TableColumn<Feedback, String> questionarioColumn;
+
     @FXML private ComboBox<Cliente> clienteComboBox;
-    @FXML private TextArea comentarioField;
-    @FXML private ComboBox<String> statusComboBox;
-    
+    @FXML private TextArea reclamacaoField;
+    @FXML private TextArea notadeservicoField;
+    @FXML private TextArea opinioesField;
+    @FXML private TextArea questionarioField;
+
     @FXML private Button createButton;
     @FXML private Button updateButton;
     @FXML private Button deleteButton;
     @FXML private Button clearButton;
-    
-    @FXML private TextField searchField;
-    @FXML private ComboBox<String> filterStatusComboBox;
 
     @Autowired
     private FeedbackService feedbackService;
@@ -46,79 +47,40 @@ public class FeedbackController {
 
     @FXML
     public void initialize() {
-        setupComboBoxes();
         setupTable();
         loadFeedback();
         loadClientes();
-        setupEventHandlers();
         disableButtons();
-    }
-
-    private void setupComboBoxes() {
-        // Status
-        statusComboBox.setItems(FXCollections.observableArrayList(
-            "Pendente", "Em Análise", "Resolvido", "Fechado"
-        ));
-        statusComboBox.setValue("Pendente");
-
-        // Filtro por status
-        filterStatusComboBox.setItems(FXCollections.observableArrayList(
-            "Todos", "Pendente", "Em Análise", "Resolvido", "Fechado"
-        ));
-        filterStatusComboBox.setValue("Todos");
-
-        // Clientes
-        clientesList = FXCollections.observableArrayList();
-        clienteComboBox.setItems(clientesList);
     }
 
     private void setupTable() {
         clienteColumn.setCellValueFactory(cellData -> {
             Cliente cliente = cellData.getValue().getIdCliente();
             return new javafx.beans.property.SimpleStringProperty(
-                cliente != null ? cliente.getNome() : "N/A"
+                    cliente != null ? cliente.getNome() : "N/A"
             );
         });
-        comentarioColumn.setCellValueFactory(new PropertyValueFactory<>("comentario"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        reclamacaoColumn.setCellValueFactory(new PropertyValueFactory<>("reclamacao"));
+        notaServicoColumn.setCellValueFactory(new PropertyValueFactory<>("notadeservico"));
+        opinioesColumn.setCellValueFactory(new PropertyValueFactory<>("opinioes"));
+        questionarioColumn.setCellValueFactory(new PropertyValueFactory<>("questionario"));
 
         feedbackList = FXCollections.observableArrayList();
         feedbackTable.setItems(feedbackList);
 
-        // Seleção de linha
         feedbackTable.getSelectionModel().selectedItemProperty().addListener(
-            (observable, oldValue, newValue) -> {
-                selectedFeedback = newValue;
-                if (newValue != null) {
-                    loadFeedbackToForm(newValue);
-                    enableButtons();
-                } else {
-                    clearForm();
-                    disableButtons();
+                (observable, oldValue, newValue) -> {
+                    selectedFeedback = newValue;
+                    if (newValue != null) {
+                        loadFeedbackToForm(newValue);
+                        enableButtons();
+                    } else {
+                        clearForm();
+                        disableButtons();
+                    }
                 }
-            }
         );
-    }
-
-    private void setupEventHandlers() {
-        // Busca em tempo real
-        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == null || newValue.isEmpty()) {
-                loadFeedback();
-            } else {
-                searchFeedback(newValue);
-            }
-        });
-
-        // Filtro por status
-        filterStatusComboBox.setOnAction(event -> {
-            String filter = filterStatusComboBox.getValue();
-            if ("Todos".equals(filter)) {
-                loadFeedback();
-            } else {
-                filterFeedbackByStatus(filter);
-            }
-        });
     }
 
     private void loadFeedback() {
@@ -129,20 +91,8 @@ public class FeedbackController {
 
     private void loadClientes() {
         List<Cliente> clientes = clienteService.findAll();
-        clientesList.clear();
-        clientesList.addAll(clientes);
-    }
-
-    private void searchFeedback(String searchTerm) {
-        List<Feedback> feedbacks = feedbackService.searchByComentario(searchTerm);
-        feedbackList.clear();
-        feedbackList.addAll(feedbacks);
-    }
-
-    private void filterFeedbackByStatus(String status) {
-        List<Feedback> feedbacks = feedbackService.findByStatus(status);
-        feedbackList.clear();
-        feedbackList.addAll(feedbacks);
+        clientesList = FXCollections.observableArrayList(clientes);
+        clienteComboBox.setItems(clientesList);
     }
 
     @FXML
@@ -151,8 +101,10 @@ public class FeedbackController {
             try {
                 Feedback feedback = new Feedback();
                 feedback.setIdCliente(clienteComboBox.getValue());
-                feedback.setComentario(comentarioField.getText().trim());
-                feedback.setStatus(statusComboBox.getValue());
+                feedback.setReclamacao(reclamacaoField.getText().trim());
+                feedback.setNotadeservico(notadeservicoField.getText().trim());
+                feedback.setOpinioes(opinioesField.getText().trim());
+                feedback.setQuestionario(questionarioField.getText().trim());
 
                 feedbackService.save(feedback);
                 showAlert("Sucesso", "Feedback criado com sucesso!", Alert.AlertType.INFORMATION);
@@ -174,8 +126,10 @@ public class FeedbackController {
         if (validateForm()) {
             try {
                 selectedFeedback.setIdCliente(clienteComboBox.getValue());
-                selectedFeedback.setComentario(comentarioField.getText().trim());
-                selectedFeedback.setStatus(statusComboBox.getValue());
+                selectedFeedback.setReclamacao(reclamacaoField.getText().trim());
+                selectedFeedback.setNotadeservico(notadeservicoField.getText().trim());
+                selectedFeedback.setOpinioes(opinioesField.getText().trim());
+                selectedFeedback.setQuestionario(questionarioField.getText().trim());
 
                 feedbackService.save(selectedFeedback);
                 showAlert("Sucesso", "Feedback atualizado com sucesso!", Alert.AlertType.INFORMATION);
@@ -223,14 +177,18 @@ public class FeedbackController {
 
     private void loadFeedbackToForm(Feedback feedback) {
         clienteComboBox.setValue(feedback.getIdCliente());
-        comentarioField.setText(feedback.getComentario());
-        statusComboBox.setValue(feedback.getStatus());
+        reclamacaoField.setText(feedback.getReclamacao());
+        notadeservicoField.setText(feedback.getNotadeservico());
+        opinioesField.setText(feedback.getOpinioes());
+        questionarioField.setText(feedback.getQuestionario());
     }
 
     private void clearForm() {
         clienteComboBox.setValue(null);
-        comentarioField.clear();
-        statusComboBox.setValue("Pendente");
+        reclamacaoField.clear();
+        notadeservicoField.clear();
+        opinioesField.clear();
+        questionarioField.clear();
     }
 
     private boolean validateForm() {
@@ -238,8 +196,20 @@ public class FeedbackController {
             showAlert("Erro", "Cliente é obrigatório", Alert.AlertType.ERROR);
             return false;
         }
-        if (comentarioField.getText().trim().isEmpty()) {
-            showAlert("Erro", "Comentário é obrigatório", Alert.AlertType.ERROR);
+        if (reclamacaoField.getText().trim().isEmpty()) {
+            showAlert("Erro", "Reclamação é obrigatória", Alert.AlertType.ERROR);
+            return false;
+        }
+        if (notadeservicoField.getText().trim().isEmpty()) {
+            showAlert("Erro", "Nota de serviço é obrigatória", Alert.AlertType.ERROR);
+            return false;
+        }
+        if (opinioesField.getText().trim().isEmpty()) {
+            showAlert("Erro", "Opiniões são obrigatórias", Alert.AlertType.ERROR);
+            return false;
+        }
+        if (questionarioField.getText().trim().isEmpty()) {
+            showAlert("Erro", "Questionário é obrigatório", Alert.AlertType.ERROR);
             return false;
         }
         return true;
@@ -262,4 +232,4 @@ public class FeedbackController {
         alert.setContentText(content);
         alert.showAndWait();
     }
-} 
+}

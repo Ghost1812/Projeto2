@@ -3,22 +3,34 @@ package com.example.proj2.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "\"feedback\"")
+@Table(name = "feedback")
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_feedback", nullable = false)
     private Integer id;
 
-    @Column(name = "comentario", nullable = false, length = 1000)
-    private String comentario;
+    @Column(name = "notadeservico", nullable = false, columnDefinition = "text")
+    private String notadeservico;
 
-    @Column(name = "status", nullable = false, length = 20)
-    private String status;
+    @Column(name = "opinioes", nullable = false, columnDefinition = "text")
+    private String opinioes;
+
+    @Column(name = "questionario", nullable = false, columnDefinition = "text")
+    private String questionario;
+
+    @Column(name = "reclamacao", nullable = false, columnDefinition = "text")
+    private String reclamacao;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_cliente", nullable = false)
     private Cliente idCliente;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_encomenda")
+    private Encomenda idEncomenda;
+
+    // Getters e Setters
 
     public Integer getId() {
         return id;
@@ -28,20 +40,36 @@ public class Feedback {
         this.id = id;
     }
 
-    public String getComentario() {
-        return comentario;
+    public String getNotadeservico() {
+        return notadeservico;
     }
 
-    public void setComentario(String comentario) {
-        this.comentario = comentario;
+    public void setNotadeservico(String notadeservico) {
+        this.notadeservico = notadeservico;
     }
 
-    public String getStatus() {
-        return status;
+    public String getOpinioes() {
+        return opinioes;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setOpinioes(String opinioes) {
+        this.opinioes = opinioes;
+    }
+
+    public String getQuestionario() {
+        return questionario;
+    }
+
+    public void setQuestionario(String questionario) {
+        this.questionario = questionario;
+    }
+
+    public String getReclamacao() {
+        return reclamacao;
+    }
+
+    public void setReclamacao(String reclamacao) {
+        this.reclamacao = reclamacao;
     }
 
     public Cliente getIdCliente() {
@@ -50,5 +78,13 @@ public class Feedback {
 
     public void setIdCliente(Cliente idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public Encomenda getIdEncomenda() {
+        return idEncomenda;
+    }
+
+    public void setIdEncomenda(Encomenda idEncomenda) {
+        this.idEncomenda = idEncomenda;
     }
 }

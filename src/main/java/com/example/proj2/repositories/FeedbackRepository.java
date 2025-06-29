@@ -8,6 +8,12 @@ import java.util.List;
 
 @Repository
 public interface FeedbackRepository extends JpaRepository<Feedback, Integer> {
-    List<Feedback> findByComentarioContainingIgnoreCase(String comentario);
-    List<Feedback> findByStatus(String status);
+
+    List<Feedback> findByOpinioesContainingIgnoreCase(String opinioes);
+
+    List<Feedback> findByNotadeservicoContainingIgnoreCase(String notadeservico);
+
+    List<Feedback> findByReclamacaoContainingIgnoreCase(String reclamacao);
+
+    List<Feedback> findByQuestionarioContainingIgnoreCase(String questionario);
 }

@@ -17,10 +17,6 @@ public class FeedbackService {
         return feedbackRepository.findAll();
     }
 
-    public Feedback findById(Integer id) {
-        return feedbackRepository.findById(id).orElse(null);
-    }
-
     public Feedback save(Feedback feedback) {
         return feedbackRepository.save(feedback);
     }
@@ -29,11 +25,23 @@ public class FeedbackService {
         feedbackRepository.deleteById(id);
     }
 
-    public List<Feedback> searchByComentario(String comentario) {
-        return feedbackRepository.findByComentarioContainingIgnoreCase(comentario);
+    // Pesquisa por texto na reclamação
+    public List<Feedback> searchByReclamacao(String termo) {
+        return feedbackRepository.findByReclamacaoContainingIgnoreCase(termo);
     }
 
-    public List<Feedback> findByStatus(String status) {
-        return feedbackRepository.findByStatus(status);
+    // Pesquisa por texto nas opiniões
+    public List<Feedback> searchByOpinioes(String termo) {
+        return feedbackRepository.findByOpinioesContainingIgnoreCase(termo);
+    }
+
+    // Filtrar por nota de serviço
+    public List<Feedback> searchByNota(String nota) {
+        return feedbackRepository.findByNotadeservicoContainingIgnoreCase(nota);
+    }
+
+    // Filtrar por questionário
+    public List<Feedback> searchByQuestionario(String texto) {
+        return feedbackRepository.findByQuestionarioContainingIgnoreCase(texto);
     }
 }

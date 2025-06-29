@@ -5,19 +5,20 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "\"encomenda\"")
 public class Encomenda {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_encomenda", nullable = false)
     private Integer id;
 
-    @Column(name = "numero_rastreio", nullable = false, unique = true, length = 50)
+    @Column(name = "numero_rastreio", nullable = true, unique = true, length = 50)
     private String numeroRastreio;
 
     @Column(name = "peso", nullable = false)
     private Double peso;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
-    @JoinColumn(name = "id_operador", nullable = true) // Permitir null
+    @JoinColumn(name = "id_operador", nullable = true)
     private OperadorTriagem idOperador;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -32,30 +33,71 @@ public class Encomenda {
     private String estadoIntegridade;
 
     @Column(name = "estado_entrega", nullable = false)
-    private String estadoEntrega; // <-- AQUI
+    private String estadoEntrega;
 
     // Getters e Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
 
-    public String getNumeroRastreio() { return numeroRastreio; }
-    public void setNumeroRastreio(String numeroRastreio) { this.numeroRastreio = numeroRastreio; }
+    public Integer getId() {
+        return id;
+    }
 
-    public Double getPeso() { return peso; }
-    public void setPeso(Double peso) { this.peso = peso; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public OperadorTriagem getIdOperador() { return idOperador; }
-    public void setIdOperador(OperadorTriagem idOperador) { this.idOperador = idOperador; }
+    public String getNumeroRastreio() {
+        return numeroRastreio;
+    }
 
-    public Rececionista getIdRececionista() { return idRececionista; }
-    public void setIdRececionista(Rececionista idRececionista) { this.idRececionista = idRececionista; }
+    public void setNumeroRastreio(String numeroRastreio) {
+        this.numeroRastreio = numeroRastreio;
+    }
 
-    public Cliente getIdCliente() { return idCliente; }
-    public void setIdCliente(Cliente idCliente) { this.idCliente = idCliente; }
+    public Double getPeso() {
+        return peso;
+    }
 
-    public String getEstadoIntegridade() { return estadoIntegridade; }
-    public void setEstadoIntegridade(String estadoIntegridade) { this.estadoIntegridade = estadoIntegridade; }
+    public void setPeso(Double peso) {
+        this.peso = peso;
+    }
 
-    public String getEstadoEntrega() { return estadoEntrega; }
-    public void setEstadoEntrega(String estadoEntrega) { this.estadoEntrega = estadoEntrega; }
+    public OperadorTriagem getIdOperador() {
+        return idOperador;
+    }
+
+    public void setIdOperador(OperadorTriagem idOperador) {
+        this.idOperador = idOperador;
+    }
+
+    public Rececionista getIdRececionista() {
+        return idRececionista;
+    }
+
+    public void setIdRececionista(Rececionista idRececionista) {
+        this.idRececionista = idRececionista;
+    }
+
+    public Cliente getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Cliente idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getEstadoIntegridade() {
+        return estadoIntegridade;
+    }
+
+    public void setEstadoIntegridade(String estadoIntegridade) {
+        this.estadoIntegridade = estadoIntegridade;
+    }
+
+    public String getEstadoEntrega() {
+        return estadoEntrega;
+    }
+
+    public void setEstadoEntrega(String estadoEntrega) {
+        this.estadoEntrega = estadoEntrega;
+    }
 }

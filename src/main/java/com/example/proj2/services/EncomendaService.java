@@ -29,6 +29,10 @@ public class EncomendaService {
 
     @Transactional
     public Encomenda save(Encomenda encomenda) {
+        if (encomenda.getNumeroRastreio() == null || encomenda.getNumeroRastreio().trim().isEmpty()) {
+            throw new IllegalArgumentException("Número de rastreio não pode ser nulo ou vazio");
+        }
+
         if (encomenda.getId() == null) {
             return encomendaRepository.save(encomenda);
         } else {
@@ -52,9 +56,7 @@ public class EncomendaService {
         return encomendaRepository.findByEstadoEntrega(estadoEntrega);
     }
 
-    // Método de conveniência para compatibilidade com controllers existentes
     public List<Encomenda> findByEstado(String estado) {
-        // Tenta primeiro por estado de entrega, depois por estado de integridade
         List<Encomenda> result = encomendaRepository.findByEstadoEntrega(estado);
         if (result.isEmpty()) {
             result = encomendaRepository.findByEstadoIntegridade(estado);
