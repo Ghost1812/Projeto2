@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import javafx.scene.image.ImageView;
+import com.example.proj2.ui.CustomDialog;
 
 @Component
 public class TriagemController {
@@ -34,6 +36,7 @@ public class TriagemController {
     
     @FXML private TextField searchField;
     @FXML private ComboBox<String> filterEstadoComboBox;
+    @FXML private ImageView logoImageView;
 
     @Autowired
     private EncomendaService encomendaService;
@@ -46,6 +49,17 @@ public class TriagemController {
 
     @FXML
     public void initialize() {
+        if (logoImageView != null) {
+            try {
+                java.io.InputStream logoStream = getClass().getClassLoader().getResourceAsStream("images/img.png");
+                if (logoStream != null) {
+                    javafx.scene.image.Image logo = new javafx.scene.image.Image(logoStream);
+                    logoImageView.setImage(logo);
+                }
+            } catch (Exception e) {
+                System.err.println("Erro ao carregar logo: " + e.getMessage());
+            }
+        }
         setupComboBoxes();
         setupTable();
         loadEncomendas();
@@ -130,7 +144,13 @@ public class TriagemController {
     }
 
     private void loadEncomendas() {
-        List<Encomenda> encomendas = encomendaService.findByEstado("Pendente");
+        String filter = filterEstadoComboBox != null ? filterEstadoComboBox.getValue() : null;
+        List<Encomenda> encomendas;
+        if (filter == null || filter.equals("Todos")) {
+            encomendas = encomendaService.findAll();
+        } else {
+            encomendas = encomendaService.findByEstado(filter);
+        }
         encomendasList.clear();
         encomendasList.addAll(encomendas);
     }
@@ -150,7 +170,7 @@ public class TriagemController {
     @FXML
     private void handleProcessar() {
         if (selectedEncomenda == null) {
-            showAlert("Erro", "Selecione uma encomenda para processar", Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Selecione uma encomenda para processar", CustomDialog.DialogType.ERROR);
             return;
         }
 
@@ -159,18 +179,18 @@ public class TriagemController {
             selectedEncomenda.setEstadoEntrega(estadoEntregaComboBox.getValue());
 
             encomendaService.save(selectedEncomenda);
-            showAlert("Sucesso", "Encomenda processada com sucesso!", Alert.AlertType.INFORMATION);
+            CustomDialog.show("Sucesso", "Encomenda processada com sucesso!", CustomDialog.DialogType.SUCCESS);
             clearForm();
             loadEncomendas();
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao processar encomenda: " + e.getMessage(), Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Erro ao processar encomenda: " + e.getMessage(), CustomDialog.DialogType.ERROR);
         }
     }
 
     @FXML
     private void handleFinalizar() {
         if (selectedEncomenda == null) {
-            showAlert("Erro", "Selecione uma encomenda para finalizar", Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Selecione uma encomenda para finalizar", CustomDialog.DialogType.ERROR);
             return;
         }
 
@@ -184,11 +204,11 @@ public class TriagemController {
                 try {
                     selectedEncomenda.setEstadoEntrega("Pronta para Entrega");
                     encomendaService.save(selectedEncomenda);
-                    showAlert("Sucesso", "Triagem finalizada com sucesso!", Alert.AlertType.INFORMATION);
+                    CustomDialog.show("Sucesso", "Triagem finalizada com sucesso!", CustomDialog.DialogType.SUCCESS);
                     clearForm();
                     loadEncomendas();
                 } catch (Exception e) {
-                    showAlert("Erro", "Erro ao finalizar triagem: " + e.getMessage(), Alert.AlertType.ERROR);
+                    CustomDialog.show("Erro", "Erro ao finalizar triagem: " + e.getMessage(), CustomDialog.DialogType.ERROR);
                 }
             }
         });

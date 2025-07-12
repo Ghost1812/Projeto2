@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import javafx.scene.image.ImageView;
+import com.example.proj2.ui.CustomDialog;
 
 @Component
 public class FuncionarioController {
@@ -30,6 +32,7 @@ public class FuncionarioController {
     @FXML private Button updateButton;
     @FXML private Button deleteButton;
     @FXML private Button clearButton;
+    @FXML private ImageView logoImageView;
 
     @Autowired
     private FuncionarioService funcionarioService;
@@ -39,6 +42,17 @@ public class FuncionarioController {
 
     @FXML
     public void initialize() {
+        if (logoImageView != null) {
+            try {
+                java.io.InputStream logoStream = getClass().getClassLoader().getResourceAsStream("images/img.png");
+                if (logoStream != null) {
+                    javafx.scene.image.Image logo = new javafx.scene.image.Image(logoStream);
+                    logoImageView.setImage(logo);
+                }
+            } catch (Exception e) {
+                System.err.println("Erro ao carregar logo: " + e.getMessage());
+            }
+        }
         setupComboBoxes();
         setupTable();
         loadFuncionarios();

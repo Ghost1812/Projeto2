@@ -1,94 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
+<?import java.lang.String?>
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.proj2.controllers.ClienteController"
-      spacing="20" style="-fx-background-color: white;" padding="20">
-
+      spacing="24" style="-fx-background-color: #f7f7f9;">
    <children>
-      <!-- Título -->
-      <HBox style="-fx-background-color: #e6b43c;" alignment="CENTER_LEFT">
+      <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header-bar">
          <children>
-            <Label text="Gestão de Clientes" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;">
-               <HBox.margin>
-                  <Insets left="20.0" top="10.0" bottom="10.0" />
-               </HBox.margin>
-            </Label>
+            <ImageView fx:id="logoImageView" fitHeight="60.0" fitWidth="60.0" preserveRatio="true" />
+            <Label text="Gestão de Clientes" styleClass="header-label" />
          </children>
       </HBox>
-
-      <!-- Formulário -->
-      <GridPane hgap="15" vgap="10">
+      <GridPane hgap="18" vgap="12" style="-fx-padding: 30 30 10 30;">
          <columnConstraints>
-            <ColumnConstraints minWidth="100.0" prefWidth="150.0" />
-            <ColumnConstraints minWidth="200.0" prefWidth="250.0" />
-            <ColumnConstraints minWidth="100.0" prefWidth="150.0" />
-            <ColumnConstraints minWidth="200.0" prefWidth="250.0" />
+            <ColumnConstraints minWidth="120.0" prefWidth="180.0" />
+            <ColumnConstraints minWidth="220.0" prefWidth="260.0" />
+            <ColumnConstraints minWidth="120.0" prefWidth="180.0" />
+            <ColumnConstraints minWidth="220.0" prefWidth="260.0" />
          </columnConstraints>
-
          <children>
-            <!-- Nome -->
-            <Label text="Nome *" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-            <TextField fx:id="nomeField" promptText="Nome completo" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-            <!-- Email -->
-            <Label text="Email *" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-            <TextField fx:id="emailField" promptText="email@exemplo.com" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-
-            <!-- Telefone -->
-            <Label text="Contacto *" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-            <TextField fx:id="telefoneField" promptText="+351 123 456 789" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-            <!-- Código Postal -->
-            <Label text="Código Postal *" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <TextField fx:id="codpostalField" promptText="1000-001" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-
-            <!-- Número da Porta -->
-            <Label text="Nº Porta *" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-            <TextField fx:id="numeroPortaField" promptText="Ex: 12" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-            <!-- Rua -->
-            <Label text="Rua *" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <TextField fx:id="ruaField" promptText="Rua das Flores" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-
-            <!-- Password (opcional) -->
-            <Label text="Password" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-            <PasswordField fx:id="passwordField" promptText="Senha de acesso" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Nome *" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="nomeField" promptText="Nome completo" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+            <Label text="Email *" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="0" />
+            <TextField fx:id="emailField" promptText="email@exemplo.com" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="0" />
+            <Label text="Contacto *" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="contactoField" promptText="+351 123 456 789" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Código Postal *" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="codpostalField" promptText="1000-001" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Label text="Nº Porta *" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <TextField fx:id="numeroPortaField" promptText="Ex: 12" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="Rua *" styleClass="form-label" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="ruaField" promptText="Rua das Flores" styleClass="text-field" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Label text="Password" styleClass="form-label" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <PasswordField fx:id="passwordField" promptText="Senha de acesso" styleClass="password-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
          </children>
       </GridPane>
-
-      <!-- Botões -->
-      <HBox spacing="10" alignment="CENTER">
+      <HBox spacing="16" alignment="CENTER" style="-fx-padding: 0 0 10 0;">
          <children>
-            <Button fx:id="createButton" text="Criar" onAction="#handleCreate" />
-            <Button fx:id="updateButton" text="Atualizar" onAction="#handleUpdate" />
-            <Button fx:id="deleteButton" text="Eliminar" onAction="#handleDelete" />
-            <Button fx:id="clearButton" text="Limpar" onAction="#handleClear" />
+            <Button fx:id="createButton" text="Criar" onAction="#handleCreate" styleClass="menu-btn" />
+            <Button fx:id="updateButton" text="Atualizar" onAction="#handleUpdate" styleClass="menu-btn" />
+            <Button fx:id="deleteButton" text="Eliminar" onAction="#handleDelete" styleClass="menu-btn" />
+            <Button fx:id="clearButton" text="Limpar" onAction="#handleClear" styleClass="menu-btn" />
          </children>
       </HBox>
-
-      <!-- Campo de pesquisa -->
-      <HBox spacing="10" alignment="CENTER_LEFT">
+      <HBox spacing="10" alignment="CENTER_LEFT" style="-fx-padding: 0 30 0 30;">
          <children>
-            <Label text="Pesquisar:" />
-            <TextField fx:id="searchField" promptText="Digite o nome do cliente..." prefWidth="300" />
+            <Label text="Pesquisar:" styleClass="form-label" />
+            <TextField fx:id="searchField" promptText="Digite o nome do cliente..." styleClass="text-field" prefWidth="300" />
          </children>
       </HBox>
-
-      <!-- Tabela -->
-      <TableView fx:id="clientesTable" VBox.vgrow="ALWAYS">
+      <TableView fx:id="clientesTable" VBox.vgrow="ALWAYS" styleClass="table-view" style="-fx-padding: 0 30 30 30;">
          <columns>
             <TableColumn fx:id="nomeColumn" text="Nome" prefWidth="150" />
             <TableColumn fx:id="emailColumn" text="Email" prefWidth="200" />
-            <TableColumn fx:id="telefoneColumn" text="Contacto" prefWidth="150" />
+            <TableColumn fx:id="contactoColumn" text="Contacto" prefWidth="150" />
             <TableColumn fx:id="codpostalColumn" text="Código Postal" prefWidth="100" />
             <TableColumn fx:id="numeroPortaColumn" text="Nº Porta" prefWidth="80" />
             <TableColumn fx:id="ruaColumn" text="Rua" prefWidth="200" />
          </columns>
       </TableView>
    </children>
+   <stylesheets>
+      <String fx:value="/css/app-theme.css" />
+   </stylesheets>
 </VBox>

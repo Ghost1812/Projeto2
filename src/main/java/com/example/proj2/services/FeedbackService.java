@@ -17,6 +17,10 @@ public class FeedbackService {
         return feedbackRepository.findAll();
     }
 
+    public List<Feedback> findAllWithEncomendaAndCliente() {
+        return feedbackRepository.findAllWithEncomendaAndCliente();
+    }
+
     public Feedback save(Feedback feedback) {
         return feedbackRepository.save(feedback);
     }

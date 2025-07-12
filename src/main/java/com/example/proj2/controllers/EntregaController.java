@@ -18,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import javafx.scene.image.ImageView;
+import com.example.proj2.ui.CustomDialog;
 
 @Component
 public class EntregaController {
@@ -40,6 +42,7 @@ public class EntregaController {
 
     @FXML private TextField searchField;
     @FXML private ComboBox<String> filterStatusComboBox;
+    @FXML private ImageView logoImageView;
 
     @Autowired private EncomendaService encomendaService;
     @Autowired private EntregaService entregaService;
@@ -53,6 +56,17 @@ public class EntregaController {
 
     @FXML
     public void initialize() {
+        if (logoImageView != null) {
+            try {
+                java.io.InputStream logoStream = getClass().getClassLoader().getResourceAsStream("images/img.png");
+                if (logoStream != null) {
+                    javafx.scene.image.Image logo = new javafx.scene.image.Image(logoStream);
+                    logoImageView.setImage(logo);
+                }
+            } catch (Exception e) {
+                System.err.println("Erro ao carregar logo: " + e.getMessage());
+            }
+        }
         setupComboBoxes();
         setupTable();
         loadEncomendas();
@@ -130,7 +144,13 @@ public class EntregaController {
     }
 
     private void loadEncomendas() {
-        List<Encomenda> encomendas = encomendaService.findByEstado("Pronta para Entrega");
+        String filter = filterStatusComboBox != null ? filterStatusComboBox.getValue() : null;
+        List<Encomenda> encomendas;
+        if (filter == null || filter.equals("Todos")) {
+            encomendas = encomendaService.findAll();
+        } else {
+            encomendas = encomendaService.findByEstado(filter);
+        }
         encomendasList.clear();
         encomendasList.addAll(encomendas);
     }
@@ -162,17 +182,17 @@ public class EntregaController {
     @FXML
     private void handleAtribuir() {
         if (selectedEncomenda == null) {
-            showAlert("Erro", "Selecione uma encomenda para atribuir", Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Selecione uma encomenda para atribuir", CustomDialog.DialogType.ERROR);
             return;
         }
 
         if (estafetaComboBox.getValue() == null) {
-            showAlert("Erro", "Selecione um estafeta", Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Selecione um estafeta", CustomDialog.DialogType.ERROR);
             return;
         }
 
         if (veiculoComboBox.getValue() == null) {
-            showAlert("Erro", "Selecione um veículo", Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Selecione um veículo", CustomDialog.DialogType.ERROR);
             return;
         }
 
@@ -190,18 +210,18 @@ public class EntregaController {
             selectedEncomenda.setEstadoEntrega("Em Rota");
             encomendaService.save(selectedEncomenda);
 
-            showAlert("Sucesso", "Encomenda atribuída com sucesso!", Alert.AlertType.INFORMATION);
+            CustomDialog.show("Sucesso", "Encomenda atribuída com sucesso!", CustomDialog.DialogType.SUCCESS);
             clearForm();
             loadEncomendas();
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao atribuir encomenda: " + e.getMessage(), Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Erro ao atribuir encomenda: " + e.getMessage(), CustomDialog.DialogType.ERROR);
         }
     }
 
     @FXML
     private void handleIniciarEntrega() {
         if (selectedEncomenda == null) {
-            showAlert("Erro", "Selecione uma encomenda para iniciar entrega", Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Selecione uma encomenda para iniciar entrega", CustomDialog.DialogType.ERROR);
             return;
         }
 
@@ -209,35 +229,30 @@ public class EntregaController {
             selectedEncomenda.setEstadoEntrega("Em Rota");
             encomendaService.save(selectedEncomenda);
 
-            showAlert("Sucesso", "Entrega iniciada com sucesso!", Alert.AlertType.INFORMATION);
+            CustomDialog.show("Sucesso", "Entrega iniciada com sucesso!", CustomDialog.DialogType.SUCCESS);
             clearForm();
             loadEncomendas();
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao iniciar entrega: " + e.getMessage(), Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Erro ao iniciar entrega: " + e.getMessage(), CustomDialog.DialogType.ERROR);
         }
     }
 
     @FXML
     private void handleFinalizarEntrega() {
         if (selectedEncomenda == null) {
-            showAlert("Erro", "Selecione uma encomenda para finalizar", Alert.AlertType.ERROR);
-            return;
-        }
-
-        if (statusEntregaComboBox.getValue() == null) {
-            showAlert("Erro", "Selecione o status da entrega", Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Selecione uma encomenda para finalizar", CustomDialog.DialogType.ERROR);
             return;
         }
 
         try {
-            selectedEncomenda.setEstadoEntrega(statusEntregaComboBox.getValue());
+            selectedEncomenda.setEstadoEntrega("Entregue");
             encomendaService.save(selectedEncomenda);
 
-            showAlert("Sucesso", "Entrega finalizada com sucesso!", Alert.AlertType.INFORMATION);
+            CustomDialog.show("Sucesso", "Entrega finalizada com sucesso!", CustomDialog.DialogType.SUCCESS);
             clearForm();
             loadEncomendas();
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao finalizar entrega: " + e.getMessage(), Alert.AlertType.ERROR);
+            CustomDialog.show("Erro", "Erro ao finalizar entrega: " + e.getMessage(), CustomDialog.DialogType.ERROR);
         }
     }
 

@@ -41,4 +41,9 @@ public class Estafeta {
     public void setContacto(String contacto) {
         this.contacto = contacto;
     }
+
+    @Override
+    public String toString() {
+        return nome + " (" + contacto + ")";
+    }
 }

@@ -7,56 +7,42 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextAlignment?>
+<?import java.lang.String?>
 
-<VBox alignment="CENTER" spacing="20" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj2.controllers.LoginController">
+<VBox alignment="CENTER" spacing="24" style="-fx-background-color: #f7f7f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj2.controllers.LoginController">
    <children>
-      <!-- Logo -->
-      <ImageView fx:id="logoImageView" fitHeight="160.0" fitWidth="160.0" preserveRatio="true">
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </ImageView>
-      
+      <!-- Header Moderno -->
+      <HBox alignment="CENTER_LEFT" styleClass="header-bar">
+         <children>
+            <ImageView fx:id="logoImageView" fitHeight="60.0" fitWidth="60.0" preserveRatio="true" />
+            <Label text="PackBee" styleClass="header-label" />
+         </children>
+      </HBox>
       <!-- Título -->
-      <Label text="LOGIN" textAlignment="CENTER">
-         <font>
-            <Font name="SansSerif" size="28.0" />
-         </font>
-         <VBox.margin>
-            <Insets bottom="20.0" />
-         </VBox.margin>
-      </Label>
-      
+      <Label text="Iniciar Sessão" styleClass="menu-title" />
       <!-- Painel de campos -->
-      <VBox alignment="CENTER" spacing="15" maxWidth="400">
+      <VBox alignment="CENTER" spacing="18" maxWidth="400">
          <children>
             <!-- Campo Email -->
             <VBox spacing="5" alignment="CENTER_LEFT">
                <children>
-                  <Label text="Email" style="-fx-font-size: 14px;" />
-                  <TextField fx:id="emailField" promptText="Digite seu email" styleClass="login-field" />
+                  <Label text="Email" styleClass="form-label" />
+                  <TextField fx:id="emailField" promptText="Digite seu email" styleClass="text-field" />
                </children>
             </VBox>
-            
             <!-- Campo Senha -->
             <VBox spacing="5" alignment="CENTER_LEFT">
                <children>
-                  <Label text="Palavra-passe" style="-fx-font-size: 14px;" />
-                  <PasswordField fx:id="passwordField" promptText="Digite sua senha" styleClass="login-field" />
+                  <Label text="Palavra-passe" styleClass="form-label" />
+                  <PasswordField fx:id="passwordField" promptText="Digite sua senha" styleClass="password-field" />
                </children>
             </VBox>
-            
             <!-- Botão de Login -->
-            <Button fx:id="loginButton" text="Entrar" onAction="#handleLogin" styleClass="login-button" maxWidth="Infinity">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin>
-            </Button>
+            <Button fx:id="loginButton" text="Entrar" onAction="#handleLogin" styleClass="menu-btn" maxWidth="Infinity" />
          </children>
       </VBox>
    </children>
-   
    <stylesheets>
-      <String fx:value="/css/login.css" />
+      <String fx:value="/css/app-theme.css" />
    </stylesheets>
 </VBox> 

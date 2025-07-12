@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -18,6 +19,13 @@ public class MainMenuController {
     @FXML
     private Label welcomeLabel;
 
+    @FXML private Button btnClientes;
+    @FXML private Button btnEncomendas;
+    @FXML private Button btnFuncionarios;
+    @FXML private Button btnTriagem;
+    @FXML private Button btnEntrega;
+    @FXML private Button btnFeedback;
+
     @Autowired
     private ApplicationContext applicationContext;
 
@@ -25,14 +33,56 @@ public class MainMenuController {
 
     @FXML
     public void initialize() {
-        // Este método será chamado quando o FXML for carregado
+        // Se o funcionario já estiver definido, aplicar lógica de visibilidade
+        if (funcionario != null) {
+            aplicarVisibilidadePorCargo();
+        }
+    }
+
+    private void aplicarVisibilidadePorCargo() {
+        if (welcomeLabel != null && funcionario != null) {
+            welcomeLabel.setText("Bem-vindo, " + funcionario.getNome() + " (" + funcionario.getCargo() + ")");
+        }
+        String cargo = funcionario != null ? funcionario.getCargo().toLowerCase().replace("-", "_") : "";
+        System.out.println("[DEBUG] Cargo normalizado: '" + cargo + "'");
+        if (btnClientes != null) btnClientes.setVisible(false);
+        if (btnEncomendas != null) btnEncomendas.setVisible(false);
+        if (btnFuncionarios != null) btnFuncionarios.setVisible(false);
+        if (btnTriagem != null) btnTriagem.setVisible(false);
+        if (btnEntrega != null) btnEntrega.setVisible(false);
+        if (btnFeedback != null) btnFeedback.setVisible(false);
+        switch (cargo) {
+            case "admin":
+                if (btnClientes != null) btnClientes.setVisible(true);
+                if (btnEncomendas != null) btnEncomendas.setVisible(true);
+                if (btnFuncionarios != null) btnFuncionarios.setVisible(true);
+                if (btnTriagem != null) btnTriagem.setVisible(true);
+                if (btnEntrega != null) btnEntrega.setVisible(true);
+                if (btnFeedback != null) btnFeedback.setVisible(true);
+                break;
+            case "rececionista":
+                if (btnClientes != null) btnClientes.setVisible(true);
+                if (btnEncomendas != null) btnEncomendas.setVisible(true);
+                break;
+            case "operador":
+                if (btnTriagem != null) btnTriagem.setVisible(true);
+                break;
+            case "estafeta":
+                if (btnEntrega != null) btnEntrega.setVisible(true);
+                break;
+            case "agente":
+                if (btnFeedback != null) btnFeedback.setVisible(true);
+                break;
+        }
     }
 
     public void setFuncionario(Funcionario funcionario) {
         this.funcionario = funcionario;
-        if (welcomeLabel != null) {
-            welcomeLabel.setText("Bem-vindo, " + funcionario.getNome());
-        }
+        aplicarVisibilidadePorCargo();
+    }
+
+    public void refreshMenu() {
+        aplicarVisibilidadePorCargo();
     }
 
     @FXML
@@ -40,7 +90,6 @@ public class MainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/cliente.fxml"));
             loader.setControllerFactory(applicationContext::getBean);
-            
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Gestão de Clientes");
@@ -48,6 +97,7 @@ public class MainMenuController {
             stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
             showAlert("Erro", "Erro ao abrir tela de gestão de clientes: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -63,7 +113,6 @@ public class MainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/encomenda.fxml"));
             loader.setControllerFactory(applicationContext::getBean);
-            
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Gestão de Encomendas");
@@ -71,6 +120,7 @@ public class MainMenuController {
             stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
             showAlert("Erro", "Erro ao abrir tela de gestão de encomendas: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -86,7 +136,6 @@ public class MainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/triagem.fxml"));
             loader.setControllerFactory(applicationContext::getBean);
-            
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Triagem de Encomendas");
@@ -94,6 +143,7 @@ public class MainMenuController {
             stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
             showAlert("Erro", "Erro ao abrir tela de triagem: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -103,7 +153,6 @@ public class MainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/entrega.fxml"));
             loader.setControllerFactory(applicationContext::getBean);
-            
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Entrega de Encomendas");
@@ -111,6 +160,7 @@ public class MainMenuController {
             stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
             showAlert("Erro", "Erro ao abrir tela de entrega: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -128,6 +178,7 @@ public class MainMenuController {
             stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
             showAlert("Erro", "Erro ao abrir tela de gestão de funcionários: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
@@ -137,7 +188,6 @@ public class MainMenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/feedback.fxml"));
             loader.setControllerFactory(applicationContext::getBean);
-            
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setTitle("Gestão de Feedback");
@@ -145,28 +195,28 @@ public class MainMenuController {
             stage.setMaximized(true);
             stage.show();
         } catch (Exception e) {
+            e.printStackTrace();
             showAlert("Erro", "Erro ao abrir tela de feedback: " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     private void handleLogout() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmar Saída");
-        alert.setHeaderText(null);
-        alert.setContentText("Tem certeza que deseja sair?");
-
-        alert.showAndWait().ifPresent(response -> {
-            if (response == javafx.scene.control.ButtonType.OK) {
-                // Fechar todas as janelas e voltar ao login
-                Stage stage = (Stage) welcomeLabel.getScene().getWindow();
-                stage.close();
-                
-                // Aqui você pode adicionar lógica para voltar à tela de login
-                // ou simplesmente fechar a aplicação
-                System.exit(0);
-            }
-        });
+        // Fecha o menu principal e volta ao login
+        Stage stage = (Stage) welcomeLabel.getScene().getWindow();
+        stage.close();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"));
+            loader.setControllerFactory(applicationContext::getBean);
+            Parent root = loader.load();
+            Stage loginStage = new Stage();
+            loginStage.setTitle("Login - PackBee");
+            loginStage.setScene(new Scene(root));
+            loginStage.setMaximized(true);
+            loginStage.show();
+        } catch (Exception e) {
+            showAlert("Erro", "Erro ao voltar ao login: " + e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     private void showAlert(String title, String content, Alert.AlertType alertType) {

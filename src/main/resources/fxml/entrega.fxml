@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj2.controllers.EntregaController" spacing="20" style="-fx-background-color: #f7f7f9;">
+    <stylesheets>
+        <String fx:value="/css/app-theme.css" />
+    </stylesheets>
+    <children>
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header-bar">
+            <children>
+                <ImageView fx:id="logoImageView" fitHeight="60.0" fitWidth="60.0" preserveRatio="true" />
+                <Label text="Entrega de Encomendas" styleClass="header-label" />
+            </children>
+        </HBox>
+        <GridPane hgap="15" vgap="10">
+            <columnConstraints>
+                <ColumnConstraints minWidth="150" />
+                <ColumnConstraints minWidth="350" />
+            </columnConstraints>
+            <children>
+                <Label text="Estafeta" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="estafetaComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Label text="Veículo" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="veiculoComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                <Label text="Status Entrega" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                <ComboBox fx:id="statusEntregaComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                <Label text="Observações" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                <TextArea fx:id="observacoesField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            </children>
+        </GridPane>
+        <HBox spacing="10" alignment="CENTER">
+            <children>
+                <Button fx:id="atribuirButton" text="Atribuir" onAction="#handleAtribuir"/>
+                <Button fx:id="iniciarEntregaButton" text="Iniciar Entrega" onAction="#handleIniciarEntrega"/>
+                <Button fx:id="finalizarEntregaButton" text="Finalizar Entrega" onAction="#handleFinalizarEntrega"/>
+                <Button fx:id="limparButton" text="Limpar" onAction="#handleLimpar"/>
+            </children>
+        </HBox>
+        <HBox spacing="10" alignment="CENTER_LEFT">
+            <children>
+                <Label text="Pesquisar:" />
+                <TextField fx:id="searchField" promptText="Digite o número de rastreio..." prefWidth="300" />
+                <ComboBox fx:id="filterStatusComboBox" promptText="Filtrar por status" />
+            </children>
+        </HBox>
+        <TableView fx:id="encomendasTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="numeroRastreioColumn" text="Nº Rastreio" prefWidth="150" />
+                <TableColumn fx:id="clienteColumn" text="Cliente" prefWidth="200" />
+                <TableColumn fx:id="enderecoColumn" text="Endereço" prefWidth="200" />
+                <TableColumn fx:id="estadoColumn" text="Status" prefWidth="120" />
+            </columns>
+        </TableView>
+    </children>
+</VBox> 

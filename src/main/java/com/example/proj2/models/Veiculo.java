@@ -50,4 +50,9 @@ public class Veiculo {
     public void setIdEstafeta(Estafeta idEstafeta) {
         this.idEstafeta = idEstafeta;
     }
+
+    @Override
+    public String toString() {
+        return matricula + " - " + tipoveiculo;
+    }
 }

@@ -1,72 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
+<?import java.lang.String?>
 <VBox xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.example.proj2.controllers.FeedbackController"
-      spacing="20" style="-fx-background-color: white;" padding="20">
-
+      spacing="20" style="-fx-background-color: white;">
+    <stylesheets>
+        <String fx:value="/css/app-theme.css" />
+    </stylesheets>
     <children>
-        <!-- Cabeçalho -->
-        <HBox style="-fx-background-color: #e6b43c;" alignment="CENTER_LEFT">
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header-bar">
             <children>
-                <Label text="Gestão de Feedback" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;">
-                    <HBox.margin>
-                        <Insets left="20.0" top="10.0" bottom="10.0"/>
-                    </HBox.margin>
-                </Label>
+                <ImageView fx:id="logoImageView" fitHeight="60.0" fitWidth="60.0" preserveRatio="true" />
+                <Label text="Gestão de Feedback" styleClass="header-label" />
             </children>
         </HBox>
-
-        <!-- Formulário -->
-        <GridPane hgap="15" vgap="10">
-            <columnConstraints>
-                <ColumnConstraints minWidth="150" />
-                <ColumnConstraints minWidth="350" />
-            </columnConstraints>
-            <children>
-                <Label text="Cliente *" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="clienteComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-                <Label text="Reclamação *" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-                <TextArea fx:id="reclamacaoField" prefRowCount="2" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-                <Label text="Nota de Serviço *" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <TextArea fx:id="notadeservicoField" prefRowCount="2" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-                <Label text="Opiniões *" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-                <TextArea fx:id="opinioesField" prefRowCount="2" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
-
-                <Label text="Questionário *" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-                <TextArea fx:id="questionarioField" prefRowCount="2" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
-            </children>
-        </GridPane>
-
-        <!-- Botões -->
-        <HBox spacing="10" alignment="CENTER">
-            <children>
-                <Button fx:id="createButton" text="Criar" onAction="#handleCreate"/>
-                <Button fx:id="updateButton" text="Atualizar" onAction="#handleUpdate"/>
-                <Button fx:id="deleteButton" text="Eliminar" onAction="#handleDelete"/>
-                <Button fx:id="clearButton" text="Limpar" onAction="#handleClear"/>
-            </children>
-        </HBox>
-
-        <!-- Tabela -->
+        <!-- O formulário e botões só aparecem para outros cargos, não para agente -->
+        <VBox fx:id="formSection" visible="false" managed="false" />
         <VBox VBox.vgrow="ALWAYS">
             <children>
-                <Label text="Feedbacks" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-
+                <Label text="Questionários das Encomendas" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
                 <TableView fx:id="feedbackTable" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="clienteColumn" text="Cliente" prefWidth="150"/>
-                        <TableColumn fx:id="reclamacaoColumn" text="Reclamação" prefWidth="200"/>
-                        <TableColumn fx:id="notaServicoColumn" text="Nota de Serviço" prefWidth="200"/>
-                        <TableColumn fx:id="opinioesColumn" text="Opiniões" prefWidth="200"/>
-                        <TableColumn fx:id="questionarioColumn" text="Questionário" prefWidth="200"/>
+                        <TableColumn fx:id="encomendaColumn" text="Encomenda" prefWidth="100" />
+                        <TableColumn fx:id="clienteColumn" text="Cliente" prefWidth="100" />
+                        <TableColumn fx:id="notadeservicoColumn" text="Nota de Serviço" prefWidth="120" />
+                        <TableColumn fx:id="opinioesColumn" text="Opiniões" prefWidth="120" />
+                        <TableColumn fx:id="questionarioColumn" text="Respostas do Questionário" prefWidth="120" />
+                        <TableColumn fx:id="reclamacaoColumn" text="Reclamação" prefWidth="120" />
                     </columns>
                 </TableView>
             </children>

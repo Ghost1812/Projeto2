@@ -1,31 +1,37 @@
 .root {
-    -fx-font-family: "SansSerif";
+    -fx-font-family: "Segoe UI", "SansSerif";
+    -fx-background-color: #f8f8f8;
 }
 
 .menu-button {
     -fx-background-color: white;
     -fx-text-fill: #333333;
-    -fx-font-size: 16px;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-pref-width: 200px;
+    -fx-pref-width: 260px;
     -fx-pref-height: 80px;
     -fx-border-color: #e6b43c;
-    -fx-border-width: 2px;
-    -fx-border-radius: 8px;
-    -fx-background-radius: 8px;
+    -fx-border-width: 2.5px;
+    -fx-border-radius: 16px;
+    -fx-background-radius: 16px;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 10, 0, 0, 5);
+    -fx-transition: all 0.2s;
+    -fx-padding: 0 18 0 18;
+    -fx-letter-spacing: 0.5px;
 }
 
 .menu-button:hover {
     -fx-background-color: #e6b43c;
     -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 6, 0, 0, 3);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 16, 0, 0, 8);
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
 }
 
 .menu-button:pressed {
     -fx-background-color: #d4a53a;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 2, 0, 0, 1);
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 2, 0, 0, 1);
 }
 
 .label {
@@ -34,4 +40,32 @@
 
 .button {
     -fx-cursor: hand;
+}
+
+.hbox {
+    -fx-background-color: linear-gradient(to right, #e6b43c, #f5d77a);
+    -fx-padding: 0 0 0 0;
+    -fx-border-radius: 0 0 18px 18px;
+    -fx-background-radius: 0 0 18px 18px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.10), 12, 0, 0, 3);
+    -fx-min-height: 60px;
+    -fx-max-height: 80px;
+}
+
+.button[text="Sair"] {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 1.5px;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-font-size: 15px;
+    -fx-padding: 4 14 4 14;
+    -fx-font-weight: bold;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 2, 0, 0, 1);
+}
+.button[text="Sair"]:hover {
+    -fx-background-color: #fff3cd;
+    -fx-text-fill: #e6b43c;
+    -fx-border-color: #e6b43c;
 } 

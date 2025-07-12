@@ -1,29 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
-
+<?import java.lang.String?>
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj2.controllers.EncomendaController" spacing="20">
    <children>
-      <!-- Header -->
-      <HBox style="-fx-background-color: #e6b43c;" alignment="CENTER_LEFT">
+      <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header-bar">
          <children>
-            <Label text="Gestão de Encomendas" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;">
-               <HBox.margin>
-                  <Insets left="20.0" top="10.0" bottom="10.0" />
-               </HBox.margin>
-            </Label>
+            <ImageView fx:id="logoImageView" fitHeight="60.0" fitWidth="60.0" preserveRatio="true" />
+            <Label text="Gestão de Encomendas" styleClass="header-label" />
          </children>
       </HBox>
-      
-      <!-- Form Section -->
       <VBox spacing="15" style="-fx-background-color: #f9f9f9; -fx-padding: 20;">
          <children>
             <Label text="Dados da Encomenda" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-            
-            <!-- Form Grid -->
             <GridPane hgap="15" vgap="10">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
@@ -31,39 +21,19 @@
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="150.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="250.0" />
                </columnConstraints>
-               
                <children>
-                  <!-- Número de Rastreio -->
                   <Label text="Número Rastreio *" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                   <TextField fx:id="numeroRastreioField" promptText="TRK123456789" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                  
-                  <!-- Cliente -->
                   <Label text="Cliente *" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                   <ComboBox fx:id="clienteComboBox" promptText="Selecione o cliente" GridPane.columnIndex="3" GridPane.rowIndex="0" />
-                  
-                  <!-- Peso -->
                   <Label text="Peso *" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                   <TextField fx:id="pesoField" promptText="2.5 kg" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  
-                  <!-- Dimensões -->
-                  <Label text="Dimensões" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                  <TextField fx:id="dimensoesField" promptText="30x20x10 cm" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                  
-                  <!-- Estado -->
-                  <Label text="Estado" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                  <ComboBox fx:id="estadoComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  
-                  <!-- Prioridade -->
-                  <Label text="Prioridade" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                  <ComboBox fx:id="prioridadeComboBox" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                  
-                  <!-- Descrição -->
-                  <Label text="Descrição" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                  <TextArea fx:id="descricaoField" promptText="Descrição detalhada da encomenda..." prefRowCount="3" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.columnSpan="3" />
+                  <Label text="Estado Integridade" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="estadoIntegridadeComboBox" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                  <Label text="Estado Entrega" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="estadoEntregaComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-            
-            <!-- Buttons -->
             <HBox spacing="10" alignment="CENTER">
                <children>
                   <Button fx:id="createButton" text="Criar" onAction="#handleCreate" styleClass="primary-button" />
@@ -74,33 +44,27 @@
             </HBox>
          </children>
       </VBox>
-      
-      <!-- Search Section -->
       <HBox spacing="10" alignment="CENTER_LEFT">
          <children>
             <Label text="Pesquisar:" />
             <TextField fx:id="searchField" promptText="Digite o número de rastreio..." prefWidth="300" />
          </children>
       </HBox>
-      
-      <!-- Table Section -->
       <VBox VBox.vgrow="ALWAYS">
          <children>
             <Label text="Lista de Encomendas" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
-            
             <TableView fx:id="encomendasTable" VBox.vgrow="ALWAYS">
                <columns>
                   <TableColumn fx:id="numeroRastreioColumn" text="Número Rastreio" prefWidth="150" />
                   <TableColumn fx:id="clienteColumn" text="Cliente" prefWidth="200" />
                   <TableColumn fx:id="pesoColumn" text="Peso" prefWidth="100" />
-                  <TableColumn fx:id="estadoColumn" text="Estado" prefWidth="120" />
-                  <TableColumn fx:id="dataCriacaoColumn" text="Data Criação" prefWidth="150" />
+                  <TableColumn fx:id="estadoIntegridadeColumn" text="Integridade" prefWidth="120" />
+                  <TableColumn fx:id="estadoEntregaColumn" text="Entrega" prefWidth="120" />
                </columns>
             </TableView>
          </children>
       </VBox>
    </children>
-   
    <stylesheets>
       <String fx:value="/css/encomenda.css" />
    </stylesheets>

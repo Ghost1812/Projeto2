@@ -4,73 +4,37 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import java.lang.String?>
 
 <VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj2.controllers.MainMenuController">
    <children>
-      <!-- Header -->
-      <HBox style="-fx-background-color: #e6b43c;" alignment="CENTER_LEFT">
+      <!-- Header Moderno -->
+      <HBox styleClass="header-bar" alignment="CENTER_LEFT">
          <children>
-            <Label fx:id="welcomeLabel" text="Bem-vindo ao PackBee" style="-fx-text-fill: white; -fx-font-size: 18px; -fx-font-weight: bold;">
-               <HBox.margin>
-                  <Insets left="20.0" top="10.0" bottom="10.0" />
-               </HBox.margin>
-            </Label>
+            <Label fx:id="welcomeLabel" styleClass="header-label" />
             <Region HBox.hgrow="ALWAYS" />
-            <Button text="Sair" onAction="#handleLogout" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-border-color: white;">
-               <HBox.margin>
-                  <Insets right="20.0" top="10.0" bottom="10.0" />
-               </HBox.margin>
-            </Button>
+            <Button text="Sair" onAction="#handleLogout" styleClass="logout-btn" />
          </children>
       </HBox>
-      
       <!-- Menu Options -->
-      <VBox alignment="CENTER" spacing="20" style="-fx-background-color: #f5f5f5;">
+      <VBox alignment="CENTER" spacing="20" style="-fx-background-color: transparent;">
          <children>
-            <Label text="Menu Principal" style="-fx-font-size: 24px; -fx-font-weight: bold;">
-               <VBox.margin>
-                  <Insets top="30.0" bottom="20.0" />
-               </VBox.margin>
-            </Label>
-            
+            <Label text="Menu Principal" styleClass="menu-title" />
             <!-- Menu Grid -->
-            <GridPane alignment="CENTER" hgap="20" vgap="20">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="200.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="200.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="200.0" prefWidth="200.0" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints vgrow="SOMETIMES" minHeight="100.0" prefHeight="100.0" />
-                  <RowConstraints vgrow="SOMETIMES" minHeight="100.0" prefHeight="100.0" />
-                  <RowConstraints vgrow="SOMETIMES" minHeight="100.0" prefHeight="100.0" />
-               </rowConstraints>
-               
+            <VBox alignment="CENTER" spacing="18">
                <children>
-                  <!-- Gestão de Clientes -->
-                  <Button text="Gestão de Clientes" onAction="#openCreateClient" styleClass="menu-button" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                  
-                  <!-- Gestão de Encomendas -->
-                  <Button text="Gestão de Encomendas" onAction="#openCreateOrder" styleClass="menu-button" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                  
-                  <!-- Gestão de Funcionários -->
-                  <Button text="Gestão de Funcionários" onAction="#openFuncionarios" styleClass="menu-button" GridPane.columnIndex="2" GridPane.rowIndex="0" />
-                  
-                  <!-- Triagem -->
-                  <Button text="Triagem Encomendas" onAction="#openSorting" styleClass="menu-button" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                  
-                  <!-- Entrega -->
-                  <Button text="Entrega Encomendas" onAction="#openDelivery" styleClass="menu-button" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  
-                  <!-- Feedback -->
-                  <Button text="Gestão de Feedback" onAction="#openFeedback" styleClass="menu-button" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Button fx:id="btnClientes" text="Gestão de Clientes" onAction="#openCreateClient" styleClass="menu-btn" />
+                  <Button fx:id="btnEncomendas" text="Gestão de Encomendas" onAction="#openCreateOrder" styleClass="menu-btn" />
+                  <Button fx:id="btnFuncionarios" text="Gestão de Funcionários" onAction="#openFuncionarios" styleClass="menu-btn" />
+                  <Button fx:id="btnTriagem" text="Triagem Encomendas" onAction="#openSorting" styleClass="menu-btn" />
+                  <Button fx:id="btnEntrega" text="Entrega Encomendas" onAction="#openDelivery" styleClass="menu-btn" />
+                  <Button fx:id="btnFeedback" text="Gestão de Feedback" onAction="#openFeedback" styleClass="menu-btn" />
                </children>
-            </GridPane>
+            </VBox>
          </children>
       </VBox>
    </children>
-   
    <stylesheets>
-      <String fx:value="/css/main-menu.css" />
+      <String fx:value="/css/app-theme.css" />
    </stylesheets>
 </VBox> 

@@ -2,8 +2,10 @@ package com.example.proj2.controllers;
 
 import com.example.proj2.models.Cliente;
 import com.example.proj2.models.Encomenda;
+import com.example.proj2.models.Rececionista;
 import com.example.proj2.services.ClienteService;
 import com.example.proj2.services.EncomendaService;
+import com.example.proj2.services.RececionistaService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import javafx.scene.image.ImageView;
+import com.example.proj2.ui.CustomDialog;
 
 @Component
 public class EncomendaController {
@@ -35,6 +39,7 @@ public class EncomendaController {
     @FXML private Button updateButton;
     @FXML private Button deleteButton;
     @FXML private Button clearButton;
+    @FXML private ImageView logoImageView;
 
     @Autowired
     private EncomendaService encomendaService;
@@ -42,12 +47,26 @@ public class EncomendaController {
     @Autowired
     private ClienteService clienteService;
 
+    @Autowired
+    private RececionistaService rececionistaService;
+
     private ObservableList<Encomenda> encomendasList;
     private ObservableList<Cliente> clientesList;
     private Encomenda selectedEncomenda;
 
     @FXML
     public void initialize() {
+        if (logoImageView != null) {
+            try {
+                java.io.InputStream logoStream = getClass().getClassLoader().getResourceAsStream("images/img.png");
+                if (logoStream != null) {
+                    javafx.scene.image.Image logo = new javafx.scene.image.Image(logoStream);
+                    logoImageView.setImage(logo);
+                }
+            } catch (Exception e) {
+                System.err.println("Erro ao carregar logo: " + e.getMessage());
+            }
+        }
         setupComboBoxes();
         setupTable();
         loadEncomendas();
@@ -148,6 +167,20 @@ public class EncomendaController {
                 encomenda.setPeso(Double.parseDouble(pesoField.getText().trim()));
                 encomenda.setEstadoIntegridade(estadoIntegridadeComboBox.getValue());
                 encomenda.setEstadoEntrega(estadoEntregaComboBox.getValue());
+                
+                // Definir um rececionista padrão
+                List<Rececionista> rececionistas = rececionistaService.findAll();
+                if (!rececionistas.isEmpty()) {
+                    encomenda.setIdRececionista(rececionistas.get(0));
+                } else {
+                    // Se não há rececionistas, criar um padrão
+                    Rececionista rececionistaPadrao = new Rececionista();
+                    rececionistaPadrao.setNome("Rececionista Padrão");
+                    rececionistaPadrao.setEmail("rececionista@empresa.com");
+                    rececionistaPadrao.setContacto("123456789");
+                    rececionistaPadrao = rececionistaService.save(rececionistaPadrao);
+                    encomenda.setIdRececionista(rececionistaPadrao);
+                }
 
                 encomendaService.save(encomenda);
                 showAlert("Sucesso", "Encomenda criada com sucesso!", Alert.AlertType.INFORMATION);
@@ -157,6 +190,7 @@ public class EncomendaController {
                 showAlert("Erro", "Peso deve ser um número válido", Alert.AlertType.ERROR);
             } catch (Exception e) {
                 showAlert("Erro", "Erro ao criar encomenda: " + e.getMessage(), Alert.AlertType.ERROR);
+                e.printStackTrace(); // Para ver o erro completo no terminal
             }
         }
     }
@@ -184,6 +218,7 @@ public class EncomendaController {
                 showAlert("Erro", "Peso deve ser um número válido", Alert.AlertType.ERROR);
             } catch (Exception e) {
                 showAlert("Erro", "Erro ao atualizar encomenda: " + e.getMessage(), Alert.AlertType.ERROR);
+                e.printStackTrace(); // Para ver o erro completo no terminal
             }
         }
     }

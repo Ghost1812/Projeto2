@@ -3,6 +3,7 @@ package com.example.proj2.controllers;
 import com.example.proj2.models.Funcionario;
 import com.example.proj2.models.UtilizadorAtual;
 import com.example.proj2.services.FuncionarioService;
+import com.example.proj2.ui.CustomDialog;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -113,6 +114,7 @@ public class LoginController {
             // Obter o controller e definir o funcionário
             MainMenuController controller = loader.getController();
             controller.setFuncionario(funcionario);
+            controller.refreshMenu();
             
             Stage stage = new Stage();
             stage.setTitle("PackBee - Menu Principal");
