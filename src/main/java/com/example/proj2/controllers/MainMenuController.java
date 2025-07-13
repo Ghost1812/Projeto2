@@ -56,9 +56,7 @@ public class MainMenuController {
                 if (btnClientes != null) btnClientes.setVisible(true);
                 if (btnEncomendas != null) btnEncomendas.setVisible(true);
                 if (btnFuncionarios != null) btnFuncionarios.setVisible(true);
-                if (btnTriagem != null) btnTriagem.setVisible(true);
-                if (btnEntrega != null) btnEntrega.setVisible(true);
-                if (btnFeedback != null) btnFeedback.setVisible(true);
+                // Os outros botões permanecem invisíveis
                 break;
             case "rececionista":
                 if (btnClientes != null) btnClientes.setVisible(true);
