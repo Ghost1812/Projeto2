@@ -25,17 +25,15 @@
                 <ComboBox fx:id="estafetaComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
                 <Label text="Veículo" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
                 <ComboBox fx:id="veiculoComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-                <Label text="Status Entrega" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-                <ComboBox fx:id="statusEntregaComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
                 <Label text="Observações" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
                 <TextArea fx:id="observacoesField" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
             </children>
         </GridPane>
         <HBox spacing="10" alignment="CENTER">
             <children>
-                <Button fx:id="atribuirButton" text="Atribuir" onAction="#handleAtribuir"/>
                 <Button fx:id="iniciarEntregaButton" text="Iniciar Entrega" onAction="#handleIniciarEntrega"/>
                 <Button fx:id="finalizarEntregaButton" text="Finalizar Entrega" onAction="#handleFinalizarEntrega"/>
+                <Button fx:id="cancelarEntregaButton" text="Cancelar Entrega" onAction="#handleCancelarEntrega"/>
                 <Button fx:id="limparButton" text="Limpar" onAction="#handleLimpar"/>
             </children>
         </HBox>

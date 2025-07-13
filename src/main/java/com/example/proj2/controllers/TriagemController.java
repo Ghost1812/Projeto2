@@ -70,7 +70,7 @@ public class TriagemController {
     private void setupComboBoxes() {
         // Estados de integridade
         estadoIntegridadeComboBox.setItems(FXCollections.observableArrayList(
-            "Bom", "Regular", "Danificado"
+            "Bom", "Danificado"
         ));
         estadoIntegridadeComboBox.setValue("Bom");
 

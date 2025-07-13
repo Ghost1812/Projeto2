@@ -9,7 +9,10 @@
 <?import javafx.scene.text.TextAlignment?>
 <?import java.lang.String?>
 
-<VBox alignment="CENTER" spacing="24" style="-fx-background-color: #f7f7f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj2.controllers.LoginController">
+<VBox alignment="TOP_CENTER" spacing="24" style="-fx-background-color: #f7f7f9;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.proj2.controllers.LoginController">
+   <padding>
+      <Insets top="40" right="0" bottom="0" left="0" />
+   </padding>
    <children>
       <!-- Header Moderno -->
       <HBox alignment="CENTER_LEFT" styleClass="header-bar">

@@ -32,13 +32,12 @@ public class EntregaController {
 
     @FXML private ComboBox<Estafeta> estafetaComboBox;
     @FXML private ComboBox<Veiculo> veiculoComboBox;
-    @FXML private ComboBox<String> statusEntregaComboBox;
     @FXML private TextArea observacoesField;
 
-    @FXML private Button atribuirButton;
     @FXML private Button iniciarEntregaButton;
     @FXML private Button finalizarEntregaButton;
     @FXML private Button limparButton;
+    @FXML private Button cancelarEntregaButton;
 
     @FXML private TextField searchField;
     @FXML private ComboBox<String> filterStatusComboBox;
@@ -77,9 +76,6 @@ public class EntregaController {
     }
 
     private void setupComboBoxes() {
-        statusEntregaComboBox.setItems(FXCollections.observableArrayList("Pendente", "Em Rota", "Entregue", "Cancelado"));
-        statusEntregaComboBox.setValue("Pendente");
-
         filterStatusComboBox.setItems(FXCollections.observableArrayList("Todos", "Pendente", "Em Rota", "Entregue", "Cancelado"));
         filterStatusComboBox.setValue("Todos");
 
@@ -180,45 +176,6 @@ public class EntregaController {
     }
 
     @FXML
-    private void handleAtribuir() {
-        if (selectedEncomenda == null) {
-            CustomDialog.show("Erro", "Selecione uma encomenda para atribuir", CustomDialog.DialogType.ERROR);
-            return;
-        }
-
-        if (estafetaComboBox.getValue() == null) {
-            CustomDialog.show("Erro", "Selecione um estafeta", CustomDialog.DialogType.ERROR);
-            return;
-        }
-
-        if (veiculoComboBox.getValue() == null) {
-            CustomDialog.show("Erro", "Selecione um veículo", CustomDialog.DialogType.ERROR);
-            return;
-        }
-
-        try {
-            Entrega entrega = new Entrega();
-
-            Cliente cliente = selectedEncomenda.getIdCliente();
-            if (cliente != null) {
-                String destino = cliente.getRua() + ", " + cliente.getCodpostal();
-                entrega.setDestino(destino);
-            }
-
-            entregaService.save(entrega);
-
-            selectedEncomenda.setEstadoEntrega("Em Rota");
-            encomendaService.save(selectedEncomenda);
-
-            CustomDialog.show("Sucesso", "Encomenda atribuída com sucesso!", CustomDialog.DialogType.SUCCESS);
-            clearForm();
-            loadEncomendas();
-        } catch (Exception e) {
-            CustomDialog.show("Erro", "Erro ao atribuir encomenda: " + e.getMessage(), CustomDialog.DialogType.ERROR);
-        }
-    }
-
-    @FXML
     private void handleIniciarEntrega() {
         if (selectedEncomenda == null) {
             CustomDialog.show("Erro", "Selecione uma encomenda para iniciar entrega", CustomDialog.DialogType.ERROR);
@@ -257,6 +214,23 @@ public class EntregaController {
     }
 
     @FXML
+    private void handleCancelarEntrega() {
+        if (selectedEncomenda == null) {
+            CustomDialog.show("Erro", "Selecione uma encomenda para cancelar", CustomDialog.DialogType.ERROR);
+            return;
+        }
+        try {
+            selectedEncomenda.setEstadoEntrega("Cancelado");
+            encomendaService.save(selectedEncomenda);
+            CustomDialog.show("Sucesso", "Entrega cancelada com sucesso!", CustomDialog.DialogType.SUCCESS);
+            clearForm();
+            loadEncomendas();
+        } catch (Exception e) {
+            CustomDialog.show("Erro", "Erro ao cancelar entrega: " + e.getMessage(), CustomDialog.DialogType.ERROR);
+        }
+    }
+
+    @FXML
     private void handleLimpar() {
         clearForm();
         selectedEncomenda = null;
@@ -267,20 +241,19 @@ public class EntregaController {
     private void clearForm() {
         estafetaComboBox.setValue(null);
         veiculoComboBox.setValue(null);
-        statusEntregaComboBox.setValue("Pendente");
         observacoesField.clear();
     }
 
     private void enableButtons() {
-        atribuirButton.setDisable(false);
         iniciarEntregaButton.setDisable(false);
         finalizarEntregaButton.setDisable(false);
+        cancelarEntregaButton.setDisable(false);
     }
 
     private void disableButtons() {
-        atribuirButton.setDisable(true);
         iniciarEntregaButton.setDisable(true);
         finalizarEntregaButton.setDisable(true);
+        cancelarEntregaButton.setDisable(true);
     }
 
     private void showAlert(String title, String content, Alert.AlertType alertType) {
